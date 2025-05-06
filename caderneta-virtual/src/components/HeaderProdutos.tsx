@@ -1,15 +1,14 @@
 import Link from "next/link";
 
-// src/components/Header.tsx
-export default function Header() {
-    return (
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Todos os produtos</h1>
-        <div className="flex items-center gap-4">
-          <span>{'<nome de usuário>'}</span>       
-          <Link href="../produtos/novo"><button className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Novo</button></Link>
-        </div>
-      </div>
-    );
-  }
-  
+export default function HeaderProdutos() {
+  return (
+    <div className="flex justify-between items-center mb-8">
+      <h1 className="text-2xl font-bold text-[#1e1e2f]">Todos os Produtos</h1>
+      <Link href="/produtos/novo">
+        <button className="bg-[#816bff] hover:bg-[#6a55e0] text-white px-6 py-2 rounded-md shadow-sm transition-all font-medium">
+          <span>+</span> <span className="ms-2">Novo Produto</span>
+        </button>
+      </Link>
+    </div>
+  );
+}

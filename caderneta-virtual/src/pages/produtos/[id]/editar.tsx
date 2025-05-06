@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Sidebar from "../../../components/Siderbar";
-import Header from "../../../components/HeaderCadastrarProd";
+import Header from "../../../components/Header";
 import { produtos } from "../../../data/produtos";
 
 export default function EditarProduto() {
@@ -12,7 +12,7 @@ export default function EditarProduto() {
     nome: "",
     categoria: "",
     cor: "",
-    capacidade: ""
+    capacidade: "",
   });
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function EditarProduto() {
           nome: produto.nome,
           categoria: produto.categoria,
           cor: produto.cor,
-          capacidade: produto.capacidade
+          capacidade: produto.capacidade,
         });
       }
     }
@@ -41,61 +41,73 @@ export default function EditarProduto() {
   }
 
   return (
-    <div className="flex">
+    <div className="flex min-h-screen bg-[#f7f6fc] text-[#1e1e2f]">
       <Sidebar />
-      <main className="flex-1 p-8">
+
+      <main className="flex-1 p-10">
         <Header />
         <h1 className="text-2xl font-bold mb-6">Editar Produto</h1>
 
-        <form onSubmit={handleSubmit} className="grid gap-4 max-w-md">
+        <form
+          onSubmit={handleSubmit}
+          className="grid gap-6 max-w-2xl bg-white border border-[#ede9ff] rounded-xl shadow-md p-8"
+        >
           <div>
-            <span>Nome:</span>
+            <label className="block mb-1 font-semibold text-[#1e1e2f]">
+              Nome:
+            </label>
             <input
               name="nome"
               type="text"
               value={form.nome}
               onChange={handleChange}
-              className="border p-2 rounded w-full"
+              className="border border-[#d1cafe] bg-white rounded-md p-3 w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
             />
           </div>
 
           <div>
-            <span>Categoria:</span>
+            <label className="block mb-1 font-semibold text-[#1e1e2f]">
+              Categoria:
+            </label>
             <input
               name="categoria"
               type="text"
               value={form.categoria}
               onChange={handleChange}
-              className="border p-2 rounded w-full"
+              className="border border-[#d1cafe] bg-white rounded-md p-3 w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
             />
           </div>
 
           <div>
-            <span>Cor:</span>
+            <label className="block mb-1 font-semibold text-[#1e1e2f]">
+              Cor:
+            </label>
             <input
               name="cor"
               type="text"
               value={form.cor}
               onChange={handleChange}
-              className="border p-2 rounded w-full"
+              className="border border-[#d1cafe] bg-white rounded-md p-3 w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
             />
           </div>
 
           <div>
-            <span>Capacidade:</span>
+            <label className="block mb-1 font-semibold text-[#1e1e2f]">
+              Capacidade:
+            </label>
             <input
               name="capacidade"
               type="text"
               value={form.capacidade}
               onChange={handleChange}
-              className="border p-2 rounded w-full"
+              className="border border-[#d1cafe] bg-white rounded-md p-3 w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
             />
           </div>
 
           <div className="flex justify-end">
             <button
               type="submit"
-              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+              className="bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-3 rounded-md shadow-sm transition"
             >
               Salvar
             </button>
