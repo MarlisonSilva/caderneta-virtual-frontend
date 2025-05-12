@@ -10,7 +10,6 @@ export default function CadastroUsuario() {
         <Header />
 
         <form className="grid gap-6 max-w-2xl w-full bg-white border border-[#ede9ff] rounded-xl shadow-md p-8 mt-6">
-
           <div>
             <label className="block mb-1 font-semibold text-[#1e1e2f]">
               Nome:
@@ -96,3 +95,17 @@ export default function CadastroUsuario() {
               />
             </div>
           </div>
+
+          <div className="flex justify-end mt-4">
+            <button
+              type="submit"
+              className="bg-[#816bff] hover:bg-[#6a55e0] text-white font-medium px-6 py-3 rounded-md transition duration-200 shadow-sm"
+            >
+              Cadastrar
+            </button>
+          </div>
+        </form>
+      </main>
+    </div>
+  );
+}
