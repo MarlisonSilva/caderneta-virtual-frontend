@@ -1,5 +1,5 @@
 import Link from "next/link";
-import produtos from "../data/produtos";
+import produtos from "../../data/produtos";
 
 export default function ProductTable() {
   return (

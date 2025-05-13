@@ -1,25 +1,26 @@
-// src/pages/produtos.tsx
-import Sidebar from "../components/Siderbar";
-import HeaderProdutos from "../components/produtos/HeaderProdutos";
-import ProductTable from "../components/produtos/ProductTable";
+// src/pages/vendas.tsx
+import Sidebar from "@/components/Siderbar";
 import Header from "@/components/Header";
+import HeaderVendas from "@/components/vendas/HeaderVendas";
+import SaleTable from "@/components/vendas/SaleTable";
 
-export default function Produtos() {
+export default function Vendas() {
   return (
     <div className="flex min-h-screen bg-[#f7f6fc] text-[#1e1e2f]">
       <Sidebar />
 
-      <main className="flex-1 p-10 space-y-6">
+      <main className="flex-1 p-10 {* space-y-6 *}">
         <Header />
-        <HeaderProdutos />
+        <HeaderVendas />
 
         <div className="bg-white rounded-xl shadow-md p-6 border border-[#ede9ff]">
           <div className="flex flex-col md:flex-row items-center gap-4 mb-6">
-            <select className="border border-[#d1cafe] bg-[#f7f6fc] text-[#1e1e2f] rounded-md p-2 w-full md:w-48 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]">
-              <option>Categoria</option>
-              <option>Copos</option>
-              <option>Garrafas</option>
-            </select>
+              <select className="border border-[#d1cafe] bg-[#f7f6fc] text-[#1e1e2f] rounded-md p-2 w-full md:w-48 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]">
+                <option>Data</option>
+                <option>Comprador</option>
+                <option>Item</option>
+                
+              </select>
 
             <input
               type="text"
@@ -32,7 +33,7 @@ export default function Produtos() {
             </button>
           </div>
 
-          <ProductTable />
+          <SaleTable />
         </div>
       </main>
     </div>

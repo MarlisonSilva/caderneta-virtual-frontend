@@ -1,7 +1,7 @@
 // src/pages/produtos.tsx
-import Sidebar from "../components/Siderbar";
-import HeaderProdutos from "../components/produtos/HeaderProdutos";
-import ProductTable from "../components/produtos/ProductTable";
+import Sidebar from "@/components/Siderbar";
+import HeaderProdutos from "@/components/produtos/HeaderProdutos";
+import ProductTable from "@/components/produtos/ProductTable";
 import Header from "@/components/Header";
 
 export default function Produtos() {
