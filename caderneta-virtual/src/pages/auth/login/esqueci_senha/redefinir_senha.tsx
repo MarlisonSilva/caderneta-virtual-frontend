@@ -57,14 +57,14 @@ export default function TelaRedefinicaoSenha() {
                 onChange={(e) => handleChange(e.target.value, index)}
                 onKeyDown={(e) => handleKeyDown(e, index)}
                 className="w-12 h-12 text-center text-xl border-2 border-gray-300 rounded-lg"
-                maxLength={1}
+               
               />
             ))}
           </div>
           <button
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white rounded-lg py-2"
+            className="w-full bg-[#816bff] text-white p-2 rounded hover:bg-[#6f5edf] transition"
             onClick={() => {
-              router.push("/nova_senha");
+              router.push("/auth/login/esqueci_senha/nova_senha");
               console.log("ativado");
             }}
           >

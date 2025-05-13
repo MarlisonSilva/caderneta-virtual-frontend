@@ -41,7 +41,7 @@ export default function Login() {
 
         {/* Coluna do Formulário */}
         <div className="md:w-1/2 p-8">
-          <h3 className="text-2xl font-semibold mb-6">Login</h3>
+          <h3 className="text-2xl font-semibold mb-6">Entrar</h3>
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
