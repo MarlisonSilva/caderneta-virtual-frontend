@@ -8,6 +8,7 @@ import {
 import { IMaskInput } from "react-imask";
 import { UserIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import Botao_voltar from "@/components/Button_back";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -38,6 +39,7 @@ export default function Login() {
       <div className="grid grid-cols-1 md:grid-cols-2 bg-white rounded-lg shadow-lg overflow-hidden w-3/4 md:w-2/3">
         {/* Coluna do Formulário */}
         <div className="p-8">
+          <Botao_voltar/>
           <h3 className="text-2xl font-semibold mb-6">Cadastre-se</h3>
 
           <form onSubmit={handleLogin} className="space-y-4">
