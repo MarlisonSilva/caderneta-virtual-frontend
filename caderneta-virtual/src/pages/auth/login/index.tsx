@@ -1,8 +1,8 @@
+"use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { JSX, useState } from "react";
 import { validar_Senha, validar_Email } from "@/utils/validacoes";
-import Link from "next/link";
 
 export default function Login() {
   const router = useRouter();
@@ -109,12 +109,14 @@ export default function Login() {
               )}
             </div>
             <div>
-              <Link
+              <button
                 className="block text-black text-sm font-medium hover:text-[#816bff] hover:underline"
-                href={"#"}
+                onClick={() =>
+                  router.push("./login/esqueci_senha/redefinir_senha")
+                }
               >
                 Esqueci minha senha
-              </Link>
+              </button>
             </div>
             <button
               type="submit"
