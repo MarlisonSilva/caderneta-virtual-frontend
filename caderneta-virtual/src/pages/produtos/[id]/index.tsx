@@ -7,22 +7,27 @@ import { useRouter } from "next/router";
 
 export default function ProdutoDetalhes() {
   const [showConfirm, setShowConfirm] = useState(false);
-  const [product, setProduto] = useState<Produto>();
+  const [product, setProduto] = useState<Produto | null>();
 
 
   const router = useRouter();
   const { id } = router.query;
 
   useEffect(() => {
-    fetchAPI(`/products/${id}`, "GET")
+    if (!id || Array.isArray(id)) return; // Garante que é uma string
+
+    fetchAPI<Produto>({
+      path: `/products/${id}`,
+      method: "GET",
+    })
       .then((data) => {
         setProduto(data);
-        console.log(product);
+        console.log(data);
       })
       .catch((err) => {
         console.error("Erro ao buscar produtos:", err);
       });
-  }, []);
+  }, [id]);
 
 
   if (!product)

@@ -4,12 +4,17 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 export default function ProductTable() {
-  const [produtos, setProdutos] = useState<Produto[]>([]);
+  const [produtos, setProdutos] = useState<Produto[] | null>([]);
+
 
   useEffect(() => {
-    fetchAPI("/products", "GET")
+    fetchAPI<Produto[]>({
+      path: `/products`,
+      method: "GET",
+    })
       .then((data) => {
-        setProdutos(data);
+        setProdutos(data ?? null);
+        console.log(data);
       })
       .catch((err) => {
         console.error("Erro ao buscar produtos:", err);
@@ -29,7 +34,7 @@ export default function ProductTable() {
           </tr>
         </thead>
         <tbody className="divide-y divide-[#f1efff]">
-          {produtos.map((p) => (
+          {produtos?.map((p) => (
             <tr
               key={p.id}
               className="hover:bg-[#f7f6fc] transition-colors duration-150"
