@@ -1,26 +1,31 @@
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Sidebar from "../../../components/Siderbar";
 import Header from "../../../components/Header";
-import { produtos } from "../../../data/produtos";
-
-type Produto = typeof produtos[number];
+import { fetchAPI } from "@/utils/connections";
+import { Produto } from "@/types/product";
+import { useRouter } from "next/router";
 
 export default function ProdutoDetalhes() {
   const [showConfirm, setShowConfirm] = useState(false);
+  const [product, setProduto] = useState<Produto>();
+
+
   const router = useRouter();
   const { id } = router.query;
 
-  const [produto, setProduto] = useState<Produto | null>(null);
-
   useEffect(() => {
-    if (id) {
-      const encontrado = produtos.find((p) => p.id === id);
-      setProduto(encontrado ?? null);
-    }
-  }, [id]);
+    fetchAPI(`/products/${id}`, "GET")
+      .then((data) => {
+        setProduto(data);
+        console.log(product);
+      })
+      .catch((err) => {
+        console.error("Erro ao buscar produtos:", err);
+      });
+  }, []);
 
-  if (!produto)
+
+  if (!product)
     return (
       <div className="flex min-h-screen bg-[#f7f6fc] text-[#1e1e2f]">
         <Sidebar />
@@ -57,7 +62,7 @@ export default function ProdutoDetalhes() {
                     // lógica de delete
                     alert("Produto apagado!");
                     setShowConfirm(false);
-                    router.push("/produtos");
+                    //router.push("/produtos");
                   }}
                   className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
                 >
@@ -75,19 +80,19 @@ export default function ProdutoDetalhes() {
         <div className="bg-white rounded-xl border border-[#ede9ff] p-6 shadow-md space-y-3 max-w-2xl">
           <p>
             <span className="font-semibold text-[#5e5e7f]">Nome:</span>{" "}
-            {produto.nome}
+            {product.name}
           </p>
           <p>
             <span className="font-semibold text-[#5e5e7f]">Categoria:</span>{" "}
-            {produto.categoria}
+            {product.category.name}
           </p>
           <p>
             <span className="font-semibold text-[#5e5e7f]">Cor:</span>{" "}
-            {produto.cor}
+            {product.color.name}
           </p>
           <p>
             <span className="font-semibold text-[#5e5e7f]">Capacidade:</span>{" "}
-            {produto.capacidade}
+            {product.capacity}
           </p>
         </div>
 
