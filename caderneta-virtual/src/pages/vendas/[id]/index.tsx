@@ -4,17 +4,19 @@ import Sidebar from "@/components/Siderbar";
 import Header from "@/components/Header";
 import vendas from "@/data/vendas";
 
+type Venda = typeof vendas[number];
+
 export default function VendaDetalhes() {
   const [showConfirm, setShowConfirm] = useState(false);
   const router = useRouter();
   const { id } = router.query;
 
-  const [venda, setVenda] = useState<any>(null);
+  const [venda, setVenda] = useState<Venda | null>(null);
 
   useEffect(() => {
     if (id) {
       const encontrada = vendas.find((v) => v.id === id);
-      setVenda(encontrada);
+      setVenda(encontrada ?? null);
     }
   }, [id]);
 
@@ -52,7 +54,6 @@ export default function VendaDetalhes() {
                 </button>
                 <button
                   onClick={() => {
-                    // lógica de delete
                     alert("Venda removida!");
                     setShowConfirm(false);
                     router.push("/vendas");
@@ -72,20 +73,16 @@ export default function VendaDetalhes() {
 
         <div className="bg-white rounded-xl border border-[#ede9ff] p-6 shadow-md space-y-3 max-w-2xl">
           <p>
-            <span className="font-semibold text-[#5e5e7f]">Cliente:</span>{" "}
-            {venda.cliente}
+            <span className="font-semibold text-[#5e5e7f]">Cliente:</span> {venda.cliente}
           </p>
           <p>
-            <span className="font-semibold text-[#5e5e7f]">Data:</span>{" "}
-            {venda.data}
+            <span className="font-semibold text-[#5e5e7f]">Data:</span> {venda.data}
           </p>
           <p>
-            <span className="font-semibold text-[#5e5e7f]">Parcelas:</span>{" "}
-            {venda.quantidade_parcelas}
+            <span className="font-semibold text-[#5e5e7f]">Parcelas:</span> {venda.quantidade_parcelas}
           </p>
           <p>
-            <span className="font-semibold text-[#5e5e7f]">Produto:</span>{" "}
-            {venda.produtos}
+            <span className="font-semibold text-[#5e5e7f]">Produto:</span> {venda.produtos}
           </p>
         </div>
 

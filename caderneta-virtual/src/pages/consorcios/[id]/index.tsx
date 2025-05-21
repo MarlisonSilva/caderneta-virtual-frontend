@@ -3,18 +3,19 @@ import { useEffect, useState } from "react";
 import Sidebar from "@/components/Siderbar";
 import Header from "@/components/Header";
 import consorcios from "@/data/consorcios"; // Altere para o caminho correto do seu array de consórcios
+type Consorcio = typeof consorcios[number];
 
 export default function ConsorcioDetalhes() {
   const [showConfirm, setShowConfirm] = useState(false);
   const router = useRouter();
   const { id } = router.query;
 
-  const [consorcio, setConsorcio] = useState<any>(null);
+  const [consorcio, setConsorcio] = useState<Consorcio | null | undefined>(null);
 
   useEffect(() => {
     if (id) {
       const encontrado = consorcios.find((c) => c.id === id);
-      setConsorcio(encontrado);
+      setConsorcio(encontrado ?? null);
     }
   }, [id]);
 
