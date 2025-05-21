@@ -1,21 +1,22 @@
-// src/pages/usuarios/[id]/index.tsx
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/Siderbar";
 import Header from "@/components/Header";
 import { usuarios } from "@/data/usuarios";
 
+type Usuario = typeof usuarios[number];
+
 export default function UsuarioDetalhes() {
     const [showConfirm, setShowConfirm] = useState(false);
     const router = useRouter();
     const { id } = router.query;
 
-    const [usuario, setUsuario] = useState<any>(null);
+    const [usuario, setUsuario] = useState<Usuario | null>(null);
 
     useEffect(() => {
         if (id) {
             const encontrado = usuarios.find((u) => u.id === id);
-            setUsuario(encontrado);
+            setUsuario(encontrado ?? null);
         }
     }, [id]);
 
@@ -33,7 +34,6 @@ export default function UsuarioDetalhes() {
     return (
         <div className="flex min-h-screen bg-[#f7f6fc] text-[#1e1e2f]">
             <Sidebar />
-
             <main className="flex-1 p-10">
                 {showConfirm && (
                     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-sm z-50">

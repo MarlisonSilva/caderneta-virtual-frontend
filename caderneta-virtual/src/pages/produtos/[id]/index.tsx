@@ -4,17 +4,19 @@ import Sidebar from "../../../components/Siderbar";
 import Header from "../../../components/Header";
 import { produtos } from "../../../data/produtos";
 
+type Produto = typeof produtos[number];
+
 export default function ProdutoDetalhes() {
   const [showConfirm, setShowConfirm] = useState(false);
   const router = useRouter();
   const { id } = router.query;
 
-  const [produto, setProduto] = useState<any>(null);
+  const [produto, setProduto] = useState<Produto | null>(null);
 
   useEffect(() => {
     if (id) {
       const encontrado = produtos.find((p) => p.id === id);
-      setProduto(encontrado);
+      setProduto(encontrado ?? null);
     }
   }, [id]);
 
