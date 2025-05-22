@@ -1,10 +1,19 @@
 import { render, screen } from "@testing-library/react";
-import CadastroConsorcio from "@/pages/consorcios/novo"; // ajuste conforme o caminho real
+import CadastroConsorcio from "@/pages/consorcios/novo";
 import "@testing-library/jest-dom";
 
-// Mocks dos componentes importados
-jest.mock("@/components/Siderbar", () => () => <div data-testid="sidebar" />);
-jest.mock("@/components/Header", () => () => <div data-testid="header" />);
+// Mocks dos componentes importados com displayName
+jest.mock("@/components/Siderbar", () => {
+  const MockSidebar = () => <div data-testid="sidebar" />;
+  MockSidebar.displayName = "MockSidebar";
+  return MockSidebar;
+});
+
+jest.mock("@/components/Header", () => {
+  const MockHeader = () => <div data-testid="header" />;
+  MockHeader.displayName = "MockHeader";
+  return MockHeader;
+});
 
 describe("Página de Cadastro de Consórcio", () => {
   it("renderiza a sidebar e o header", () => {

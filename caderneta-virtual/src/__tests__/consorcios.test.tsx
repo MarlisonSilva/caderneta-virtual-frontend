@@ -2,10 +2,30 @@ import { render, screen } from "@testing-library/react";
 import Consorcios from "@/pages/consorcios";
 import "@testing-library/jest-dom";
 
-jest.mock("@/components/Siderbar", () => () => <div data-testid="sidebar" />);
-jest.mock("@/components/Header", () => () => <div data-testid="header" />);
-jest.mock("@/components/consorcios/HeaderConsorcios", () => () => <div data-testid="header-consorcios" />);
-jest.mock("@/components/consorcios/ConsorciosTable", () => () => <div data-testid="consorcio-table" />);
+// Mocks nomeados com displayName
+jest.mock("@/components/Siderbar", () => {
+  const MockSidebar = () => <div data-testid="sidebar" />;
+  MockSidebar.displayName = "MockSidebar";
+  return MockSidebar;
+});
+
+jest.mock("@/components/Header", () => {
+  const MockHeader = () => <div data-testid="header" />;
+  MockHeader.displayName = "MockHeader";
+  return MockHeader;
+});
+
+jest.mock("@/components/consorcios/HeaderConsorcios", () => {
+  const MockHeaderConsorcios = () => <div data-testid="header-consorcios" />;
+  MockHeaderConsorcios.displayName = "MockHeaderConsorcios";
+  return MockHeaderConsorcios;
+});
+
+jest.mock("@/components/consorcios/ConsorciosTable", () => {
+  const MockConsorciosTable = () => <div data-testid="consorcio-table" />;
+  MockConsorciosTable.displayName = "MockConsorciosTable";
+  return MockConsorciosTable;
+});
 
 describe("Página de Consórcios", () => {
   it("renderiza corretamente todos os componentes principais", () => {

@@ -2,11 +2,30 @@ import { render, screen } from "@testing-library/react";
 import Vendas from "@/pages/vendas";
 import "@testing-library/jest-dom";
 
-// Mock dos componentes utilizados
-jest.mock("@/components/Siderbar", () => () => <div data-testid="sidebar" />);
-jest.mock("@/components/Header", () => () => <div data-testid="header" />);
-jest.mock("@/components/vendas/HeaderVendas", () => () => <div data-testid="header-vendas" />);
-jest.mock("@/components/vendas/SaleTable", () => () => <div data-testid="sale-table" />);
+// Mocks com displayName para evitar warnings do ESLint
+jest.mock("@/components/Siderbar", () => {
+  const MockSidebar = () => <div data-testid="sidebar" />;
+  MockSidebar.displayName = "MockSidebar";
+  return MockSidebar;
+});
+
+jest.mock("@/components/Header", () => {
+  const MockHeader = () => <div data-testid="header" />;
+  MockHeader.displayName = "MockHeader";
+  return MockHeader;
+});
+
+jest.mock("@/components/vendas/HeaderVendas", () => {
+  const MockHeaderVendas = () => <div data-testid="header-vendas" />;
+  MockHeaderVendas.displayName = "MockHeaderVendas";
+  return MockHeaderVendas;
+});
+
+jest.mock("@/components/vendas/SaleTable", () => {
+  const MockSaleTable = () => <div data-testid="sale-table" />;
+  MockSaleTable.displayName = "MockSaleTable";
+  return MockSaleTable;
+});
 
 describe("Página de Vendas", () => {
   it("renderiza todos os componentes principais corretamente", () => {

@@ -2,11 +2,30 @@ import { render, screen } from "@testing-library/react";
 import Usuarios from "@/pages/usuarios/index";
 import "@testing-library/jest-dom";
 
-// Mock dos componentes usados na página
-jest.mock("@/components/Siderbar", () => () => <div data-testid="sidebar" />);
-jest.mock("@/components/Header", () => () => <div data-testid="header" />);
-jest.mock("@/components/usuarios/HeaderUsuarios", () => () => <div data-testid="header-usuarios" />);
-jest.mock("@/components/usuarios/UsuariosTable", () => () => <div data-testid="user-table" />);
+// Mocks com displayName para evitar warnings do ESLint
+jest.mock("@/components/Siderbar", () => {
+  const MockSidebar = () => <div data-testid="sidebar" />;
+  MockSidebar.displayName = "MockSidebar";
+  return MockSidebar;
+});
+
+jest.mock("@/components/Header", () => {
+  const MockHeader = () => <div data-testid="header" />;
+  MockHeader.displayName = "MockHeader";
+  return MockHeader;
+});
+
+jest.mock("@/components/usuarios/HeaderUsuarios", () => {
+  const MockHeaderUsuarios = () => <div data-testid="header-usuarios" />;
+  MockHeaderUsuarios.displayName = "MockHeaderUsuarios";
+  return MockHeaderUsuarios;
+});
+
+jest.mock("@/components/usuarios/UsuariosTable", () => {
+  const MockUsuariosTable = () => <div data-testid="user-table" />;
+  MockUsuariosTable.displayName = "MockUsuariosTable";
+  return MockUsuariosTable;
+});
 
 describe("Página de Usuários", () => {
   it("renderiza todos os componentes principais corretamente", () => {
