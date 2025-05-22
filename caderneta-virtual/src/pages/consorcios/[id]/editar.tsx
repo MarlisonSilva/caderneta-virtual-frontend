@@ -2,10 +2,10 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Sidebar from "../../../components/Siderbar";
 import Header from "../../../components/Header";
-import { consorcios } from "../../../data/consorcios"; // Substitua com seu array real
-import { produtos } from "../../../data/produtos";
+import { consortia } from "../../../data/consortia"; // Substitua com seu array real
+import { products } from "../../../data/products";
 
-export default function EditarConsorcio() {
+export default function EditConsortium() {
   const router = useRouter();
   const { id } = router.query;
 
@@ -19,14 +19,14 @@ export default function EditarConsorcio() {
 
   useEffect(() => {
     if (id) {
-      const consorcio = consorcios.find((c) => c.id === id);
-      if (consorcio) {
+      const consortium = consortia.find((c) => c.id === id);
+      if (consortium) {
         setForm({
-          nome: consorcio.nome,
-          produto: consorcio.produto,
-          valorTotal: consorcio.valor_total,
-          parcelas: consorcio.quantidade_parcelas,
-          dataInicio: consorcio.data,
+          nome: consortium.nome,
+          produto: consortium.produto,
+          valorTotal: consortium.valor_total,
+          parcelas: consortium.quantidade_parcelas,
+          dataInicio: consortium.data,
         });
       }
     }
@@ -80,9 +80,9 @@ export default function EditarConsorcio() {
                 className="border border-[#d1cafe] bg-white rounded-md p-3 w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
               >
                 <option value="">Selecione um produto</option>
-                {produtos.map((produto) => (
-                  <option key={produto.id} value={produto.nome}>
-                    {produto.nome}
+                {products.map((product) => (
+                  <option key={product.id} value={product.nome}>
+                    {product.nome}
                   </option>
                 ))}
               </select>

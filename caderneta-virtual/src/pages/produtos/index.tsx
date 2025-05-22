@@ -1,17 +1,17 @@
 // src/pages/produtos.tsx
 import Sidebar from "@/components/Siderbar";
-import HeaderProdutos from "@/components/produtos/HeaderProdutos";
-import ProductTable from "@/components/produtos/ProductTable";
+import HeaderProducts from "@/components/products/HeaderProducts";
+import ProductsTable from "@/components/products/ProductsTable";
 import Header from "@/components/Header";
 
-export default function Produtos() {
+export default function ListProducts() {
   return (
     <div className="flex min-h-screen bg-[#f7f6fc] text-[#1e1e2f]">
       <Sidebar />
 
       <main className="flex-1 p-10 space-y-6">
         <Header />
-        <HeaderProdutos />
+        <HeaderProducts />
 
         <div className="bg-white rounded-xl shadow-md p-6 border border-[#ede9ff]">
           <div className="flex flex-col md:flex-row items-center gap-4 mb-6">
@@ -32,7 +32,7 @@ export default function Produtos() {
             </button>
           </div>
 
-          <ProductTable />
+          <ProductsTable />
         </div>
       </main>
     </div>

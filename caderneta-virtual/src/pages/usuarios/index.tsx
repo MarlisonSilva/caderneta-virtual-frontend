@@ -1,17 +1,17 @@
 // src/pages/usuarios/index.tsx
 import Sidebar from "@/components/Siderbar";
 import Header from "@/components/Header";
-import HeaderUsuarios from "@/components/usuarios/HeaderUsuarios";
-import UserTable from "@/components/usuarios/UsuariosTable";
+import HeaderUsers from "@/components/users/HeaderUsers";
+import UsersTable from "@/components/users/UsersTable";
 
-export default function Usuarios() {
+export default function ListUsers() {
     return (
         <div className="flex min-h-screen bg-[#f7f6fc] text-[#1e1e2f]">
             <Sidebar />
 
             <main className="flex-1 p-10 space-y-6">
                 <Header />
-                <HeaderUsuarios />
+                <HeaderUsers />
 
                 <div className="bg-white rounded-xl shadow-md p-6 border border-[#ede9ff]">
                     <div className="flex flex-col md:flex-row items-center gap-4 mb-6">
@@ -32,7 +32,7 @@ export default function Usuarios() {
                         </button>
                     </div>
 
-                    <UserTable />
+                    <UsersTable />
                 </div>
             </main>
         </div>

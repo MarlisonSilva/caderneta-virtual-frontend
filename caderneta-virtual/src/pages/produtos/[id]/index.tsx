@@ -5,30 +5,28 @@ import { fetchAPI } from "@/utils/connections";
 import { Produto } from "@/types/product";
 import { useRouter } from "next/router";
 
-export default function ProdutoDetalhes() {
+export default function ViewProduct() {
   const [showConfirm, setShowConfirm] = useState(false);
-  const [product, setProduto] = useState<Produto | null>();
-
+  const [product, setProduct] = useState<Produto | null>(null);
 
   const router = useRouter();
   const { id } = router.query;
 
   useEffect(() => {
-    if (!id || Array.isArray(id)) return; // Garante que é uma string
+    if (!id || Array.isArray(id)) return;
 
     fetchAPI<Produto>({
       path: `/products/${id}`,
       method: "GET",
     })
       .then((data) => {
-        setProduto(data);
+        setProduct(data);
         console.log(data);
       })
       .catch((err) => {
-        console.error("Erro ao buscar produtos:", err);
+        console.error("Erro ao buscar produto:", err);
       });
   }, [id]);
-
 
   if (!product)
     return (
@@ -64,10 +62,9 @@ export default function ProdutoDetalhes() {
                 </button>
                 <button
                   onClick={() => {
-                    // lógica de delete
                     alert("Produto apagado!");
                     setShowConfirm(false);
-                    //router.push("/produtos");
+                    // router.push("/produtos");
                   }}
                   className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
                 >

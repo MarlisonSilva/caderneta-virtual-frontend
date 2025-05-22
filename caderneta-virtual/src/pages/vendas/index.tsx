@@ -1,17 +1,17 @@
 // src/pages/vendas.tsx
 import Sidebar from "@/components/Siderbar";
 import Header from "@/components/Header";
-import HeaderVendas from "@/components/vendas/HeaderVendas";
-import SaleTable from "@/components/vendas/SaleTable";
+import HeaderSales from "@/components/sales/HeaderSales";
+import SalesTable from "@/components/sales/SalesTable";
 
-export default function Vendas() {
+export default function ListSales() {
   return (
     <div className="flex min-h-screen bg-[#f7f6fc] text-[#1e1e2f]">
       <Sidebar />
 
       <main className="flex-1 p-10 {* space-y-6 *}">
         <Header />
-        <HeaderVendas />
+        <HeaderSales />
 
         <div className="bg-white rounded-xl shadow-md p-6 border border-[#ede9ff]">
           <div className="flex flex-col md:flex-row items-center gap-4 mb-6">
@@ -33,7 +33,7 @@ export default function Vendas() {
             </button>
           </div>
 
-          <SaleTable />
+          <SalesTable />
         </div>
       </main>
     </div>

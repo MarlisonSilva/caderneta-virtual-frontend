@@ -2,28 +2,28 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Sidebar from "../../../components/Siderbar";
 import Header from "../../../components/Header";
-import { produtos } from "../../../data/produtos";
+import { products } from "../../../data/products";
 
-export default function EditarProduto() {
+export default function EditProduct() {
   const router = useRouter();
   const { id } = router.query;
 
   const [form, setForm] = useState({
-    nome: "",
-    categoria: "",
-    cor: "",
-    capacidade: "",
+    name: "",
+    category: "",
+    color: "",
+    capacity: "",
   });
 
   useEffect(() => {
     if (id) {
-      const produto = produtos.find((p) => p.id === id);
-      if (produto) {
+      const product = products.find((p) => p.id === id);
+      if (product) {
         setForm({
-          nome: produto.nome,
-          categoria: produto.categoria,
-          cor: produto.cor,
-          capacidade: produto.capacidade,
+          name: product.nome,
+          category: product.categoria,
+          color: product.cor,
+          capacity: product.capacidade,
         });
       }
     }
@@ -57,9 +57,9 @@ export default function EditarProduto() {
               Nome:
             </label>
             <input
-              name="nome"
+              name="name"
               type="text"
-              value={form.nome}
+              value={form.name}
               onChange={handleChange}
               className="border border-[#d1cafe] bg-white rounded-md p-3 w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
             />
@@ -70,22 +70,20 @@ export default function EditarProduto() {
               Categoria:
             </label>
             <input
-              name="categoria"
+              name="category"
               type="text"
-              value={form.categoria}
+              value={form.category}
               onChange={handleChange}
               className="border border-[#d1cafe] bg-white rounded-md p-3 w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
             />
           </div>
 
           <div>
-            <label className="block mb-1 font-semibold text-[#1e1e2f]">
-              Cor:
-            </label>
+            <label className="block mb-1 font-semibold text-[#1e1e2f]">Cor:</label>
             <input
-              name="cor"
+              name="color"
               type="text"
-              value={form.cor}
+              value={form.color}
               onChange={handleChange}
               className="border border-[#d1cafe] bg-white rounded-md p-3 w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
             />
@@ -96,9 +94,9 @@ export default function EditarProduto() {
               Capacidade:
             </label>
             <input
-              name="capacidade"
+              name="capacity"
               type="text"
-              value={form.capacidade}
+              value={form.capacity}
               onChange={handleChange}
               className="border border-[#d1cafe] bg-white rounded-md p-3 w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
             />
