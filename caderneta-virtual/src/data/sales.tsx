@@ -1,5 +1,5 @@
 // src/data/vendas.ts
-export const vendas = [
+export const sales = [
   {
     id: "1",
     cliente: "João Silva",
@@ -23,4 +23,4 @@ export const vendas = [
   }
 ];
 
-export default vendas;
+export default sales;

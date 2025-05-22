@@ -1,17 +1,17 @@
 // src/pages/consorcios.tsx
 import Sidebar from "@/components/Siderbar";
 import Header from "@/components/Header";
-import HeaderConsorcios from "@/components/consorcios/HeaderConsorcios";
-import ConsorcioTable from "@/components/consorcios/ConsorciosTable";
+import HeaderConsortia from "@/components/consortia/HeaderConsortia";
+import ConsorcioTable from "@/components/consortia/ConsortiaTable";
 
-export default function Consorcios() {
+export default function ListConsortia() {
   return (
     <div className="flex min-h-screen bg-[#f7f6fc] text-[#1e1e2f]">
       <Sidebar />
 
       <main className="flex-1 p-10 space-y-6">
         <Header />
-        <HeaderConsorcios />
+        <HeaderConsortia />
 
         <div className="bg-white rounded-xl shadow-md p-6 border border-[#ede9ff]">
           <div className="flex flex-col md:flex-row items-center gap-4 mb-6">

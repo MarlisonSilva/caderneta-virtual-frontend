@@ -1,8 +1,8 @@
 // src/components/usuarios/UserTable.tsx
 import Link from "next/link";
-import usuarios from "../../data/usuarios";
+import users from "../../data/users";
 
-export default function UserTable() {
+export default function UsersTable() {
     return (
         <div className="overflow-x-auto bg-white rounded-xl border border-[#ede9ff] shadow-md">
             <table className="w-full text-sm text-left text-[#1e1e2f] min-w-[600px]">
@@ -15,7 +15,7 @@ export default function UserTable() {
                     </tr>
                 </thead>
                 <tbody className="divide-y divide-[#f1efff]">
-                    {usuarios.map((u, i) => (
+                    {users.map((u, i) => (
                         <tr key={i} className="hover:bg-[#f7f6fc] transition-colors duration-150">
                             <td className="px-6 py-4 font-medium text-[#5e5e7f]">{u.nome}</td>
                             <td className="px-6 py-4">{u.email}</td>

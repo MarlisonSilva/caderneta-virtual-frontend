@@ -2,13 +2,13 @@ import Sidebar from "../../components/Siderbar";
 import Header from "../../components/Header";
 import Select from "react-select";
 
-const produtos = [
+const products = [
   { value: 'garrafa_rosa_325ml', label: 'Garrafa Rosa 325 ml' },
   { value: 'caneca_branca', label: 'Caneca Branca' },
   { value: 'camiseta_preta_p', label: 'Camiseta Preta P' },
 ];
 
-export default function CadastroProduto() {
+export default function CreateSale() {
   return (
     <div className="flex min-h-screen bg-[#f7f6fc] text-[#1e1e2f]">
       <Sidebar />
@@ -58,7 +58,7 @@ export default function CadastroProduto() {
             </label>
             <div className="flex">
               <Select
-                options={produtos}
+                options={products}
                 className="me-2 w-full"
                 placeholder="Buscar produto(s)..."
               />

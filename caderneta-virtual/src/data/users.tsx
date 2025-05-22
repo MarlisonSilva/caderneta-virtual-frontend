@@ -1,5 +1,5 @@
 // src/data/usuarios.ts
-export const usuarios = [
+export const users = [
     {
         id: "1",
         nome: "Joana Silva",
@@ -30,4 +30,4 @@ export const usuarios = [
     }
 ];
 
-export default usuarios;
+export default users;

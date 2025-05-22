@@ -1,4 +1,4 @@
-export const consorcios = [
+export const consortia = [
   {
     id: "1",
     nome: "Consorcio milionário",
@@ -21,4 +21,4 @@ export const consorcios = [
   },
 ];
 
-export default consorcios;
+export default consortia;

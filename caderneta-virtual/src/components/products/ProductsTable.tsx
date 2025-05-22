@@ -3,8 +3,8 @@ import { fetchAPI } from "@/utils/connections";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-export default function ProductTable() {
-  const [produtos, setProdutos] = useState<Produto[] | null>([]);
+export default function ProductsTable() {
+  const [products, setProducts] = useState<Produto[] | null>([]);
 
 
   useEffect(() => {
@@ -13,7 +13,7 @@ export default function ProductTable() {
       method: "GET",
     })
       .then((data) => {
-        setProdutos(data ?? null);
+        setProducts(data ?? null);
         console.log(data);
       })
       .catch((err) => {
@@ -34,7 +34,7 @@ export default function ProductTable() {
           </tr>
         </thead>
         <tbody className="divide-y divide-[#f1efff]">
-          {produtos?.map((p) => (
+          {products?.map((p) => (
             <tr
               key={p.id}
               className="hover:bg-[#f7f6fc] transition-colors duration-150"

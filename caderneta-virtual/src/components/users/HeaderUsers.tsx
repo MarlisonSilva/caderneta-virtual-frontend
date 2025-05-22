@@ -1,7 +1,7 @@
 // src/components/usuarios/HeaderUsuarios.tsx
 import Link from "next/link";
 
-export default function HeaderUsuarios() {
+export default function HeaderUsers() {
     return (
         <div className="flex justify-between items-center mb-8">
             <h1 className="text-2xl font-bold text-[#1e1e2f]">Todos os Usuários</h1>

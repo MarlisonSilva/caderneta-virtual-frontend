@@ -1,15 +1,14 @@
-// src/pages/usuarios/[id]/editar.tsx
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/Siderbar";
 import Header from "@/components/Header";
-import { usuarios } from "@/data/usuarios";
+import { users } from "@/data/users";
 
-export default function EditarUsuario() {
+export default function EditUser() {
     const router = useRouter();
     const { id } = router.query;
 
-    const [form, setForm] = useState({
+    const [userData, setUserData] = useState({
         nome: "",
         email: "",
         telefone: "",
@@ -25,24 +24,27 @@ export default function EditarUsuario() {
 
     useEffect(() => {
         if (id) {
-            const usuario = usuarios.find((u) => u.id === id);
-            if (usuario) setForm(usuario);
+            const foundUser = users.find((u) => u.id === id);
+            if (foundUser) setUserData(foundUser);
         }
     }, [id]);
 
-    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = e.target;
 
-        if (name in form.endereco) {
-            setForm({ ...form, endereco: { ...form.endereco, [name]: value } });
+        if (name in userData.endereco) {
+            setUserData({
+                ...userData,
+                endereco: { ...userData.endereco, [name]: value },
+            });
         } else {
-            setForm({ ...form, [name]: value });
+            setUserData({ ...userData, [name]: value });
         }
     }
 
-    function handleSubmit(e: React.FormEvent) {
+    function handleFormSubmit(e: React.FormEvent) {
         e.preventDefault();
-        console.log("Usuário atualizado:", form);
+        console.log("Usuário atualizado:", userData);
         alert("Usuário atualizado com sucesso!");
         router.push("/usuarios");
     }
@@ -56,22 +58,76 @@ export default function EditarUsuario() {
                 <h1 className="text-2xl font-bold mb-6">Editar Usuário</h1>
 
                 <form
-                    onSubmit={handleSubmit}
+                    onSubmit={handleFormSubmit}
                     className="grid gap-6 max-w-2xl bg-white border border-[#ede9ff] rounded-xl shadow-md p-8"
                 >
-                    <input name="nome" value={form.nome} onChange={handleChange} placeholder="Nome" className="border border-[#d1cafe] rounded-md p-3 w-full" />
-                    <input name="email" value={form.email} onChange={handleChange} placeholder="Email" className="border border-[#d1cafe] rounded-md p-3 w-full" />
-                    <input name="telefone" value={form.telefone} onChange={handleChange} placeholder="Telefone" className="border border-[#d1cafe] rounded-md p-3 w-full" />
-                    <input name="senha" value={form.senha} onChange={handleChange} placeholder="Senha" className="border border-[#d1cafe] rounded-md p-3 w-full" />
+                    <input
+                        name="nome"
+                        value={userData.nome}
+                        onChange={handleInputChange}
+                        placeholder="Nome"
+                        className="border border-[#d1cafe] rounded-md p-3 w-full"
+                    />
+                    <input
+                        name="email"
+                        value={userData.email}
+                        onChange={handleInputChange}
+                        placeholder="Email"
+                        className="border border-[#d1cafe] rounded-md p-3 w-full"
+                    />
+                    <input
+                        name="telefone"
+                        value={userData.telefone}
+                        onChange={handleInputChange}
+                        placeholder="Telefone"
+                        className="border border-[#d1cafe] rounded-md p-3 w-full"
+                    />
+                    <input
+                        name="senha"
+                        value={userData.senha}
+                        onChange={handleInputChange}
+                        placeholder="Senha"
+                        className="border border-[#d1cafe] rounded-md p-3 w-full"
+                    />
 
                     <div className="grid grid-cols-4 gap-4">
-                        <input name="uf" value={form.endereco.uf} onChange={handleChange} placeholder="UF" className="col-span-1 border border-[#d1cafe] rounded-md p-3" />
-                        <input name="cep" value={form.endereco.cep} onChange={handleChange} placeholder="CEP" className="col-span-1 border border-[#d1cafe] rounded-md p-3" />
-                        <input name="rua" value={form.endereco.rua} onChange={handleChange} placeholder="Rua" className="col-span-2 border border-[#d1cafe] rounded-md p-3" />
+                        <input
+                            name="uf"
+                            value={userData.endereco.uf}
+                            onChange={handleInputChange}
+                            placeholder="UF"
+                            className="col-span-1 border border-[#d1cafe] rounded-md p-3"
+                        />
+                        <input
+                            name="cep"
+                            value={userData.endereco.cep}
+                            onChange={handleInputChange}
+                            placeholder="CEP"
+                            className="col-span-1 border border-[#d1cafe] rounded-md p-3"
+                        />
+                        <input
+                            name="rua"
+                            value={userData.endereco.rua}
+                            onChange={handleInputChange}
+                            placeholder="Rua"
+                            className="col-span-2 border border-[#d1cafe] rounded-md p-3"
+                        />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
-                        <input name="numero" value={form.endereco.numero} onChange={handleChange} placeholder="Nº" className="border border-[#d1cafe] rounded-md p-3" />
-                        <input name="bairro" value={form.endereco.bairro} onChange={handleChange} placeholder="Bairro" className="border border-[#d1cafe] rounded-md p-3" />
+                        <input
+                            name="numero"
+                            value={userData.endereco.numero}
+                            onChange={handleInputChange}
+                            placeholder="Nº"
+                            className="border border-[#d1cafe] rounded-md p-3"
+                        />
+                        <input
+                            name="bairro"
+                            value={userData.endereco.bairro}
+                            onChange={handleInputChange}
+                            placeholder="Bairro"
+                            className="border border-[#d1cafe] rounded-md p-3"
+                        />
                     </div>
 
                     <div className="flex justify-end gap-4">

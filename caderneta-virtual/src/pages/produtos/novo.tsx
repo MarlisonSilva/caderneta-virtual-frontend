@@ -1,7 +1,7 @@
 import Sidebar from "../../components/Siderbar";
 import Header from "../../components/Header";
 
-export default function CadastroProduto() {
+export default function CreateProduct() {
   return (
     <div className="flex min-h-screen bg-[#f7f6fc] text-[#1e1e2f]">
       <Sidebar />

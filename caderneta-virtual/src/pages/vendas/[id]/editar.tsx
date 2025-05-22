@@ -2,20 +2,20 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Sidebar from "../../../components/Siderbar";
 import Header from "../../../components/Header";
-import vendas from "../../../data/vendas";
+import sales from "../../../data/sales";
 import Select from "react-select";
 
-const produtos = [
+const products = [
   { value: 'garrafa_rosa_325ml', label: 'Garrafa Rosa 325 ml' },
   { value: 'caneca_branca', label: 'Caneca Branca' },
   { value: 'camiseta_preta_p', label: 'Camiseta Preta P' },
 ];
 
-export default function EditarVenda() {
+export default function EditSale() {
   const router = useRouter();
   const { id } = router.query;
 
-  const [form, setForm] = useState({
+  const [formData, setFormData] = useState({
     cliente: "",
     data: "",
     quantidade_parcelas: "",
@@ -24,25 +24,25 @@ export default function EditarVenda() {
 
   useEffect(() => {
     if (id) {
-      const venda = vendas.find((v) => v.id === id);
-      if (venda) {
-        setForm({
-          cliente: venda.cliente,
-          data: venda.data,
-          quantidade_parcelas: venda.quantidade_parcelas,
-          produtos: venda.produtos,
+      const sale = sales.find((v) => v.id === id);
+      if (sale) {
+        setFormData({
+          cliente: sale.cliente,
+          data: sale.data,
+          quantidade_parcelas: sale.quantidade_parcelas,
+          produtos: sale.produtos,
         });
       }
     }
   }, [id]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log("Venda atualizada:", form);
+    console.log("Venda atualizada:", formData);
     alert("Venda atualizada com sucesso!");
     router.push(`/vendas/${id}`);
   }
@@ -66,7 +66,7 @@ export default function EditarVenda() {
             <input
               name="cliente"
               type="text"
-              value={form.cliente}
+              value={formData.cliente}
               onChange={handleChange}
               className="border border-[#d1cafe] bg-white rounded-md p-3 w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
             />
@@ -79,7 +79,7 @@ export default function EditarVenda() {
             <input
               name="data"
               type="date"
-              value={form.data}
+              value={formData.data}
               onChange={handleChange}
               className="border border-[#d1cafe] bg-white rounded-md p-3 w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
             />
@@ -92,7 +92,7 @@ export default function EditarVenda() {
             <input
               name="quantidade_parcelas"
               type="number"
-              value={form.quantidade_parcelas}
+              value={formData.quantidade_parcelas}
               onChange={handleChange}
               className="border border-[#d1cafe] bg-white rounded-md p-3 w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
             />
@@ -104,7 +104,7 @@ export default function EditarVenda() {
             </label>
             <div className="flex">
               <Select
-                options={produtos}
+                options={products}
                 className="me-2 w-full"
                 placeholder="Buscar produto(s)..."
               />

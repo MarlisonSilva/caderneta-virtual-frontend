@@ -2,25 +2,25 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/Siderbar";
 import Header from "@/components/Header";
-import vendas from "@/data/vendas";
+import sales from "@/data/sales";
 
-type Venda = typeof vendas[number];
+type Sale = typeof sales[number];
 
-export default function VendaDetalhes() {
-  const [showConfirm, setShowConfirm] = useState(false);
+export default function ViewSale() {
+  const [confirmVisible, setConfirmVisible] = useState(false);
   const router = useRouter();
   const { id } = router.query;
 
-  const [venda, setVenda] = useState<Venda | null>(null);
+  const [sale, setSale] = useState<Sale | null>(null);
 
   useEffect(() => {
     if (id) {
-      const encontrada = vendas.find((v) => v.id === id);
-      setVenda(encontrada ?? null);
+      const foundSale = sales.find((v) => v.id === id);
+      setSale(foundSale ?? null);
     }
   }, [id]);
 
-  if (!venda)
+  if (!sale)
     return (
       <div className="flex min-h-screen bg-[#f7f6fc] text-[#1e1e2f]">
         <Sidebar />
@@ -36,7 +36,7 @@ export default function VendaDetalhes() {
       <Sidebar />
 
       <main className="flex-1 p-10">
-        {showConfirm && (
+        {confirmVisible && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-sm z-50">
             <div className="bg-white p-6 rounded-xl shadow-xl w-full max-w-md text-center border border-[#ede9ff]">
               <h2 className="text-xl font-semibold mb-3">
@@ -47,7 +47,7 @@ export default function VendaDetalhes() {
               </p>
               <div className="flex justify-end gap-4">
                 <button
-                  onClick={() => setShowConfirm(false)}
+                  onClick={() => setConfirmVisible(false)}
                   className="px-4 py-2 bg-gray-200 text-[#1e1e2f] rounded-md hover:bg-gray-300 transition"
                 >
                   Cancelar
@@ -55,7 +55,7 @@ export default function VendaDetalhes() {
                 <button
                   onClick={() => {
                     alert("Venda removida!");
-                    setShowConfirm(false);
+                    setConfirmVisible(false);
                     router.push("/vendas");
                   }}
                   className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
@@ -73,16 +73,16 @@ export default function VendaDetalhes() {
 
         <div className="bg-white rounded-xl border border-[#ede9ff] p-6 shadow-md space-y-3 max-w-2xl">
           <p>
-            <span className="font-semibold text-[#5e5e7f]">Cliente:</span> {venda.cliente}
+            <span className="font-semibold text-[#5e5e7f]">Cliente:</span> {sale.cliente}
           </p>
           <p>
-            <span className="font-semibold text-[#5e5e7f]">Data:</span> {venda.data}
+            <span className="font-semibold text-[#5e5e7f]">Data:</span> {sale.data}
           </p>
           <p>
-            <span className="font-semibold text-[#5e5e7f]">Parcelas:</span> {venda.quantidade_parcelas}
+            <span className="font-semibold text-[#5e5e7f]">Parcelas:</span> {sale.quantidade_parcelas}
           </p>
           <p>
-            <span className="font-semibold text-[#5e5e7f]">Produto:</span> {venda.produtos}
+            <span className="font-semibold text-[#5e5e7f]">Produto:</span> {sale.produtos}
           </p>
         </div>
 
@@ -94,7 +94,7 @@ export default function VendaDetalhes() {
             Atualizar
           </button>
           <button
-            onClick={() => setShowConfirm(true)}
+            onClick={() => setConfirmVisible(true)}
             className="bg-red-600 hover:bg-red-700 text-white font-medium px-6 py-2 rounded-md shadow-sm transition"
           >
             Apagar

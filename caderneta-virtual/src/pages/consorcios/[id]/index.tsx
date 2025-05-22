@@ -2,24 +2,24 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/Siderbar";
 import Header from "@/components/Header";
-import consorcios from "@/data/consorcios"; // Altere para o caminho correto do seu array de consórcios
-type Consorcio = typeof consorcios[number];
+import consortia from "@/data/consortia"; // Altere para o caminho correto do seu array de consórcios
+type Consortium = typeof consortia[number];
 
-export default function ConsorcioDetalhes() {
+export default function ViewConsortium() {
   const [showConfirm, setShowConfirm] = useState(false);
   const router = useRouter();
   const { id } = router.query;
 
-  const [consorcio, setConsorcio] = useState<Consorcio | null | undefined>(null);
+  const [consortium, setConsortium] = useState<Consortium | null | undefined>(null);
 
   useEffect(() => {
     if (id) {
-      const encontrado = consorcios.find((c) => c.id === id);
-      setConsorcio(encontrado ?? null);
+      const found = consortia.find((c) => c.id === id);
+      setConsortium(found ?? null);
     }
   }, [id]);
 
-  if (!consorcio)
+  if (!consortium)
     return (
       <div className="flex min-h-screen bg-[#f7f6fc] text-[#1e1e2f]">
         <Sidebar />
@@ -74,31 +74,31 @@ export default function ConsorcioDetalhes() {
         <div className="bg-white rounded-xl border border-[#ede9ff] p-6 shadow-md space-y-3 max-w-2xl">
           <p>
             <span className="font-semibold text-[#5e5e7f]">Nome:</span>{" "}
-            {consorcio.nome}
+            {consortium.nome}
           </p>
           <p>
             <span className="font-semibold text-[#5e5e7f]">Data de início:</span>{" "}
-            {consorcio.data}
+            {consortium.data}
           </p>
           <p>
             <span className="font-semibold text-[#5e5e7f]">Produto:</span>{" "}
-            {consorcio.produto}
+            {consortium.produto}
           </p>
           <p>
             <span className="font-semibold text-[#5e5e7f]">Valor total:</span>{" "}
-            R$ {consorcio.valor_total}
+            R$ {consortium.valor_total}
           </p>
           <p>
             <span className="font-semibold text-[#5e5e7f]">Quant. Parcelas:</span>{" "}
-            {consorcio.quantidade_parcelas}
+            {consortium.quantidade_parcelas}
           </p>
           <p>
             <span className="font-semibold text-[#5e5e7f]">Categoria:</span>{" "}
-            {consorcio.categoria}
+            {consortium.categoria}
           </p>
           <p>
             <span className="font-semibold text-[#5e5e7f]">Status:</span>{" "}
-            {consorcio.status}
+            {consortium.status}
           </p>
         </div>
 
