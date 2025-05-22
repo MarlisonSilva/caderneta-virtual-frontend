@@ -35,7 +35,7 @@ export default function Sidebar() {
       </div>
 
       <button
-        onClick={() => router.push("/login")}
+        onClick={() => router.push("/auth/login")}
         className="mt-10 text-sm text-red-200 hover:text-red-100 transition"
       >
         SAIR
