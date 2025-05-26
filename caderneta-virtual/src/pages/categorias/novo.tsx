@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Sidebar from "../../components/Siderbar";
 import Header from "../../components/Header";
 import { fetchAPI } from "@/utils/connections";
-import { Category } from "@/types/category"; // se tiver o type
+import { Category } from "@/types/category";
 
 export default function CreateCategory() {
   const router = useRouter();
@@ -24,7 +24,7 @@ export default function CreateCategory() {
         body: form,
       });
       alert("Categoria criada com sucesso!");
-      router.push("/categorias"); // ou pra onde quiser redirecionar
+      router.push("/categorias");
     } catch (err) {
       console.error("Erro ao criar categoria:", err);
       alert("Erro ao criar categoria.");

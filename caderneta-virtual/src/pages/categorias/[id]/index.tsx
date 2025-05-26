@@ -61,10 +61,19 @@ export default function ViewCategory() {
                   Cancelar
                 </button>
                 <button
-                  onClick={() => {
-                    alert("Categoria apagada!");
-                    setShowConfirm(false);
-                    // router.push("/categorias");
+                  onClick={async () => {
+                    try {
+                      await fetchAPI({
+                        path: `/categories/${id}/`,
+                        method: "DELETE",
+                      });
+                      alert("Cor apagada com sucesso!");
+                      setShowConfirm(false);
+                      router.push("/categorias");
+                    } catch (err) {
+                      console.error("Erro ao apagar categoria:", err);
+                      alert("Erro ao apagar categoria.");
+                    }
                   }}
                   className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
                 >
