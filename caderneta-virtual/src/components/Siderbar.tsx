@@ -8,6 +8,8 @@ export default function Sidebar() {
     { label: "Vendas", path: "/vendas" },
     { label: "Consórcios", path: "/consorcios" },
     { label: "Categorias", path: "/categorias" },
+    { label: "Cores", path: "/cores" },
+    { label: "Unidades", path: "/unidades" },
     { label: "Usuários", path: "/usuarios" },
   ];
 
