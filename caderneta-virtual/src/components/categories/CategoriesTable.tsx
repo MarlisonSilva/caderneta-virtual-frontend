@@ -1,19 +1,19 @@
-import { Product } from "@/types/product";
+import { Category } from "@/types/category";
 import { fetchAPI } from "@/utils/connections";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-export default function ProductsTable() {
-  const [products, setProducts] = useState<Product[] | null>([]);
+export default function CategoriesTable() {
+  const [categories, setCategories] = useState<Category[] | null>([]);
 
 
   useEffect(() => {
-    fetchAPI<Product[]>({
-      path: `/products`,
+    fetchAPI<Category[]>({
+      path: `/categories`,
       method: "GET",
     })
       .then((data) => {
-        setProducts(data ?? null);
+        setCategories(data ?? null);
         console.log(data);
       })
       .catch((err) => {
@@ -26,26 +26,20 @@ export default function ProductsTable() {
       <table className="w-full text-sm text-left text-[#1e1e2f] min-w-[600px]">
         <thead className="bg-[#816bff] text-white uppercase text-xs tracking-wide">
           <tr>
-            <th className="px-6 py-4">Nome</th>
             <th className="px-6 py-4">Categoria</th>
-            <th className="px-6 py-4">Cor</th>
-            <th className="px-6 py-4">Capacidade</th>
             <th className="px-6 py-4 text-right">Ação</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-[#f1efff]">
-          {products?.map((p) => (
+          {categories?.map((c) => (
             <tr
-              key={p.id}
+              key={c.id}
               className="hover:bg-[#f7f6fc] transition-colors duration-150"
             >
-              <td className="px-6 py-4 font-medium text-[#5e5e7f]">{p.name}</td>
-              <td className="px-6 py-4">{p.category.name}</td>
-              <td className="px-6 py-4">{p.color.name}</td>
-              <td className="px-6 py-4">{p.capacity}</td>
+              <td className="px-6 py-4 font-medium text-[#5e5e7f]">{c.name}</td>
               <td className="px-6 py-4 text-right">
                 <Link
-                  href={`/produtos/${p.id}`}
+                  href={`/categorias/${c.id}`}
                   className="text-[#816bff] hover:underline hover:text-[#6a55e0] font-medium transition"
                 >
                   Ver detalhes
