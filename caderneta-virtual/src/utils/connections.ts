@@ -11,7 +11,7 @@ export async function fetchAPI<T = unknown>({
   headers = {},
   body = {},
 }: FetchAPIOptions): Promise<T> {
-  const apiURL = process.env.CVV_API_URL || "http://localhost:8000/api";
+  const apiURL = process.env.NEXT_PUBLIC_CVV_API_URL || "http://localhost:8000/api";
   let response: Response;
 
   if (method.toLowerCase() === "get") {
