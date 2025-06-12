@@ -94,7 +94,7 @@ export default function ViewProduct() {
           </p>
           <p>
             <span className="font-semibold text-[#5e5e7f]">Capacidade:</span>{" "}
-            {product.capacity}
+            {product.capacity} {product.metric.name}
           </p>
         </div>
 
