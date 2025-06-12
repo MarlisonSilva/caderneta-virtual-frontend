@@ -22,20 +22,18 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'  # ou a versão do Node.js que seu projeto utiliza
+          node-version: '18'
 
       - name: Install dependencies
         run: |
           npm install
         env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
 
       - name: Run tests with Jest and coverage
         run: |
           npm run test -- --coverage --ci --reporters=default --reporters=jest-sonar
         env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
 
       - name: Check SONAR_TOKEN availability
