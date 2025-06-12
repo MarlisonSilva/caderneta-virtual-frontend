@@ -15,7 +15,7 @@ export default function CreateProduct() {
     category_id: "",
     color_id: "",
     capacity: "",
-    metric: "",
+    metric_id: "",
   });
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -153,8 +153,8 @@ export default function CreateProduct() {
               Unidade de Medida:
             </label>
             <select
-              name="metric"
-              value={form.metric}
+              name="metric_id"
+              value={form.metric_id}
               onChange={handleChange}
               required
               disabled={loading}
