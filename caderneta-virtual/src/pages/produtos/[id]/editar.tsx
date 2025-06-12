@@ -1,8 +1,12 @@
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import Sidebar from "../../../components/Siderbar";
-import Header from "../../../components/Header";
-import { products } from "../../../data/products";
+import Sidebar from "@/components/Siderbar";
+import Header from "@/components/Header";
+import { fetchAPI } from "@/utils/connections";
+import { Product } from "@/types/product";
+import { Category } from "@/types/category";
+import { Color } from "@/types/color";
+import { Metric } from "@/types/metric";
 
 export default function EditProduct() {
   const router = useRouter();
@@ -10,34 +14,76 @@ export default function EditProduct() {
 
   const [form, setForm] = useState({
     name: "",
-    category: "",
-    color: "",
+    category_id: "",
+    color_id: "",
     capacity: "",
+    metric_id: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [colors, setColors] = useState<Color[]>([]);
+  const [metrics, setMetrics] = useState<Metric[]>([]);
 
   useEffect(() => {
-    if (id) {
-      const product = products.find((p) => p.id === id);
-      if (product) {
-        setForm({
-          name: product.nome,
-          category: product.categoria,
-          color: product.cor,
-          capacity: product.capacidade,
-        });
+    async function loadOptions() {
+      try {
+        const [cats, cols, mets] = await Promise.all([
+          fetchAPI<Category[]>({ path: "/categories/", method: "GET" }),
+          fetchAPI<Color[]>({ path: "/colors/", method: "GET" }),
+          fetchAPI<Metric[]>({ path: "/metrics/", method: "GET" }),
+        ]);
+        setCategories(cats);
+        setColors(cols);
+        setMetrics(mets);
+      } catch (err) {
+        console.error("Erro ao carregar opções:", err);
       }
     }
+
+    async function loadProduct() {
+      if (!id) return;
+      try {
+        const product = await fetchAPI<Product>({
+          path: `/products/${id}/`,
+          method: "GET",
+        });
+        setForm({
+          name: product.name || "",
+          category_id: product.category.id?.toString() || "",
+          color_id: product.color.id?.toString() || "",
+          capacity: product.capacity.toString() || "",
+          metric_id: product.metric.id?.toString() || "",
+        });
+      } catch (err) {
+        console.error("Erro ao carregar produto:", err);
+      }
+    }
+
+    loadOptions();
+    loadProduct();
   }, [id]);
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log("Produto atualizado:", form);
-    alert("Produto atualizado com sucesso!");
-    router.push(`/produtos/${id}`);
+    setLoading(true);
+    try {
+      await fetchAPI<Product>({
+        path: `/products/${id}/`,
+        method: "PUT",
+        body: form,
+      });
+      alert("Produto atualizado com sucesso!");
+      router.push("/produtos");
+    } catch (err) {
+      console.error("Erro ao atualizar produto:", err);
+      alert("Erro ao atualizar produto.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -46,22 +92,24 @@ export default function EditProduct() {
 
       <main className="flex-1 p-10">
         <Header />
-        <h1 className="text-2xl font-bold mb-6">Editar Produto</h1>
 
         <form
           onSubmit={handleSubmit}
-          className="grid gap-6 max-w-2xl bg-white border border-[#ede9ff] rounded-xl shadow-md p-8"
+          className="grid gap-6 max-w-2xl w-full bg-white border border-[#ede9ff] rounded-xl shadow-md p-8 mt-6"
         >
           <div>
             <label className="block mb-1 font-semibold text-[#1e1e2f]">
-              Nome:
+              Nome do Produto:
             </label>
             <input
               name="name"
               type="text"
+              placeholder="Nome do produto"
               value={form.name}
               onChange={handleChange}
-              className="border border-[#d1cafe] bg-white rounded-md p-3 w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
+              required
+              disabled={loading}
+              className="w-full border border-[#d1cafe] bg-white text-[#1e1e2f] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
             />
           </div>
 
@@ -69,24 +117,42 @@ export default function EditProduct() {
             <label className="block mb-1 font-semibold text-[#1e1e2f]">
               Categoria:
             </label>
-            <input
-              name="category"
-              type="text"
-              value={form.category}
+            <select
+              name="category_id"
+              value={form.category_id}
               onChange={handleChange}
-              className="border border-[#d1cafe] bg-white rounded-md p-3 w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
-            />
+              required
+              disabled={loading}
+              className="w-full border border-[#d1cafe] bg-white text-[#1e1e2f] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
+            >
+              <option value="">Selecione uma categoria</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>
-            <label className="block mb-1 font-semibold text-[#1e1e2f]">Cor:</label>
-            <input
-              name="color"
-              type="text"
-              value={form.color}
+            <label className="block mb-1 font-semibold text-[#1e1e2f]">
+              Cor:
+            </label>
+            <select
+              name="color_id"
+              value={form.color_id}
               onChange={handleChange}
-              className="border border-[#d1cafe] bg-white rounded-md p-3 w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
-            />
+              required
+              disabled={loading}
+              className="w-full border border-[#d1cafe] bg-white text-[#1e1e2f] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
+            >
+              <option value="">Selecione uma cor</option>
+              {colors.map((col) => (
+                <option key={col.id} value={col.id}>
+                  {col.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>
@@ -96,18 +162,43 @@ export default function EditProduct() {
             <input
               name="capacity"
               type="text"
+              placeholder="Capacidade (apenas número)"
               value={form.capacity}
               onChange={handleChange}
-              className="border border-[#d1cafe] bg-white rounded-md p-3 w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
+              required
+              disabled={loading}
+              className="w-full border border-[#d1cafe] bg-white text-[#1e1e2f] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
             />
+          </div>
+
+          <div>
+            <label className="block mb-1 font-semibold text-[#1e1e2f]">
+              Unidade de Medida:
+            </label>
+            <select
+              name="metric_id"
+              value={form.metric_id}
+              onChange={handleChange}
+              required
+              disabled={loading}
+              className="w-full border border-[#d1cafe] bg-white text-[#1e1e2f] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
+            >
+              <option value="">Selecione uma unidade</option>
+              {metrics.map((met) => (
+                <option key={met.id} value={met.id}>
+                  {met.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="flex justify-end">
             <button
               type="submit"
-              className="bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-3 rounded-md shadow-sm transition"
+              disabled={loading}
+              className="bg-[#816bff] hover:bg-[#6a55e0] text-white font-medium px-6 py-3 rounded-md transition duration-200 shadow-sm disabled:opacity-50"
             >
-              Salvar
+              {loading ? "Atualizando..." : "Atualizar"}
             </button>
           </div>
         </form>
