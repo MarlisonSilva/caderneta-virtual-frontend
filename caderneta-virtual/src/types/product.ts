@@ -1,5 +1,6 @@
 import { Category } from "./category";
 import { Color } from "./color";
+import { Metric } from "./metric";
 
 export type Product = {
   id: number;
@@ -7,4 +8,5 @@ export type Product = {
   category: Category;
   color: Color;
   capacity: number;
+  metric: Metric;
 };

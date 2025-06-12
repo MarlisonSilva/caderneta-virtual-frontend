@@ -42,7 +42,7 @@ export default function ProductsTable() {
               <td className="px-6 py-4 font-medium text-[#5e5e7f]">{p.name}</td>
               <td className="px-6 py-4">{p.category.name}</td>
               <td className="px-6 py-4">{p.color.name}</td>
-              <td className="px-6 py-4">{p.capacity}</td>
+              <td className="px-6 py-4">{p.capacity} {p.metric.name}</td>
               <td className="px-6 py-4 text-right">
                 <Link
                   href={`/produtos/${p.id}`}
