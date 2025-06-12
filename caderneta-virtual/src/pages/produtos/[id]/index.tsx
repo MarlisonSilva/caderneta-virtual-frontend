@@ -61,10 +61,18 @@ export default function ViewProduct() {
                   Cancelar
                 </button>
                 <button
-                  onClick={() => {
-                    alert("Produto apagado!");
-                    setShowConfirm(false);
-                    // router.push("/produtos");
+                  onClick={async () => {
+                    try {
+                      await fetchAPI({
+                        path: `/products/${id}/`,
+                        method: "DELETE",
+                      });
+                      setShowConfirm(false);
+                      router.push("/produtos");
+                    } catch (err) {
+                      console.error("Erro ao deletar produto:", err);
+                      alert("Erro ao apagar produto.");
+                    }
                   }}
                   className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
                 >
