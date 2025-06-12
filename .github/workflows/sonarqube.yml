@@ -1,0 +1,64 @@
+name: Next.js CI with SonarQube
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  pull-requests: read
+
+jobs:
+  build:
+    environment: Sonar
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  # ou a versão do Node.js que seu projeto utiliza
+
+      - name: Install dependencies
+        run: |
+          npm install
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+
+      - name: Run tests with Jest and coverage
+        run: |
+          npm run test -- --coverage --ci --reporters=default --reporters=jest-sonar
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+
+      - name: Check SONAR_TOKEN availability
+        run: |
+          if [ -z "$SONAR_TOKEN" ]; then
+            echo "ERROR: SONAR_TOKEN is NOT set"
+            exit 1
+          else
+            echo "SONAR_TOKEN is set"
+          fi
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Run SonarScanner with debug logs
+        uses: SonarSource/sonarcloud-github-action@v2
+        with:
+          args: >
+            -Dsonar.projectKey=nextjs-frontend
+            -Dsonar.sources=.
+            -Dsonar.host.url=https://labens.dct.ufrn.br/sonarqube
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov-report/index.html
+            -Dsonar.exclusions=**/node_modules/**
+            -X
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
