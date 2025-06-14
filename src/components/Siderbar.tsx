@@ -21,21 +21,20 @@ export default function Sidebar() {
         </h2>
         <ul className="space-y-4 text-sm font-medium">
           {menuItems.map((item) => (
-            <li
-              key={item.path}
-              className={`px-3 py-2 rounded-lg transition-colors cursor-pointer ${
-                router.pathname.startsWith(item.path)
-                  ? "bg-white text-[#6a55e0] font-semibold"
-                  : "hover:bg-[#7c69ef]"
-              }`}
-              onClick={() => router.push(item.path)}
-            >
-              {item.label}
+            <li key={item.path}>
+              <button
+                onClick={() => router.push(item.path)}
+                className={`w-full text-left px-3 py-2 rounded-lg transition-colors cursor-pointer ${router.pathname.startsWith(item.path)
+                    ? "bg-white text-[#6a55e0] font-semibold"
+                    : "hover:bg-[#7c69ef]"
+                  }`}
+              >
+                {item.label}
+              </button>
             </li>
           ))}
         </ul>
       </div>
-
       <button
         onClick={() => router.push("/auth/login")}
         className="mt-10 text-sm text-red-200 hover:text-red-100 transition"
