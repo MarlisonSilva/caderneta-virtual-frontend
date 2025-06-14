@@ -15,13 +15,13 @@ jest.mock("@/components/Header", () => {
   return MockHeader;
 });
 
-jest.mock("@/components/vendas/HeaderVendas", () => {
+jest.mock("@/components/sales/HeaderSales", () => {
   const MockHeaderVendas = () => <div data-testid="header-vendas" />;
   MockHeaderVendas.displayName = "MockHeaderVendas";
   return MockHeaderVendas;
 });
 
-jest.mock("@/components/vendas/SaleTable", () => {
+jest.mock("@/components/sales/SalesTable", () => {
   const MockSaleTable = () => <div data-testid="sale-table" />;
   MockSaleTable.displayName = "MockSaleTable";
   return MockSaleTable;

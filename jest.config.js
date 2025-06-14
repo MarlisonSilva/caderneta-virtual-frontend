@@ -1,8 +1,13 @@
+/** @type {import('jest').Config} */
 module.exports = {
-  testEnvironment: 'jsdom',
-  moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1', // suporte ao alias "@/..."
-    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+  preset: "ts-jest",
+  testEnvironment: "jsdom",
+  transform: {
+    "^.+\\.(ts|tsx)$": "ts-jest"
   },
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/src/$1"
+  },
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  transformIgnorePatterns: ["<rootDir>/node_modules/"]
 };

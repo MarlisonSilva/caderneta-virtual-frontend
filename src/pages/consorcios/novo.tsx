@@ -13,10 +13,11 @@ export default function CreateConsortium() {
           {/* Linha: Nome do consórcio e Produto */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block mb-1 font-semibold text-[#1e1e2f]">
+              <label htmlFor="consortium" className="block mb-1 font-semibold text-[#1e1e2f]">
                 Nome do consórcio:
               </label>
               <input
+                id="consortium"
                 type="text"
                 placeholder="ex: Consórcio premiado"
                 className="w-full border border-[#d1cafe] bg-white text-[#1e1e2f] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
@@ -24,10 +25,11 @@ export default function CreateConsortium() {
             </div>
 
             <div>
-              <label className="block mb-1 font-semibold text-[#1e1e2f]">
+              <label htmlFor="product" className="block mb-1 font-semibold text-[#1e1e2f]">
                 Produto:
               </label>
               <select
+                id="product"
                 className="w-full border border-[#d1cafe] bg-white text-[#1e1e2f] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
               >
                 <option value="">Selecione um produto</option>
@@ -41,10 +43,11 @@ export default function CreateConsortium() {
           {/* Linha: Valor total e Quantidade de parcelas */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block mb-1 font-semibold text-[#1e1e2f]">
+              <label htmlFor="total_value" className="block mb-1 font-semibold text-[#1e1e2f]">
                 Valor Total do Consórcio:
               </label>
               <input
+                id="total_value"
                 type="number"
                 placeholder="ex: 1200,00"
                 className="w-full border border-[#d1cafe] bg-white text-[#1e1e2f] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
@@ -52,10 +55,11 @@ export default function CreateConsortium() {
             </div>
 
             <div>
-              <label className="block mb-1 font-semibold text-[#1e1e2f]">
+              <label htmlFor="installment" className="block mb-1 font-semibold text-[#1e1e2f]">
                 Quantidade de Parcelas:
               </label>
               <input
+                id="installment"
                 type="number"
                 placeholder="ex: 12"
                 className="w-full border border-[#d1cafe] bg-white text-[#1e1e2f] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
@@ -66,10 +70,11 @@ export default function CreateConsortium() {
           {/* Linha: Data de início */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block mb-1 font-semibold text-[#1e1e2f]">
+              <label htmlFor="date_begin" className="block mb-1 font-semibold text-[#1e1e2f]">
                 Data de Início:
               </label>
               <input
+                id="date_begin"
                 type="date"
                 className="w-full border border-[#d1cafe] bg-white text-[#1e1e2f] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
               />
@@ -78,11 +83,11 @@ export default function CreateConsortium() {
 
           {/* Seção de busca e adição de clientes */}
           <div>
-            <label className="block mb-2 font-semibold text-[#1e1e2f]">
+            <label htmlFor="search_client" className="block mb-2 font-semibold text-[#1e1e2f]">
               Buscar Cliente:
             </label>
             <div className="flex gap-2">
-              <input
+              <input id="search_client"
                 type="text"
                 placeholder="Digite o nome do cliente"
                 className="flex-1 border border-[#d1cafe] bg-white text-[#1e1e2f] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
@@ -98,10 +103,10 @@ export default function CreateConsortium() {
 
           {/* Lista de clientes adicionados */}
           <div>
-            <label className="block mb-2 font-semibold text-[#1e1e2f]">
+            <span className="block mb-2 font-semibold text-[#1e1e2f]">
               Clientes Adicionados:
-            </label>
-            <div className="border border-[#d1cafe] bg-[#f9f8ff] rounded-md p-4 space-y-2 max-h-60 overflow-y-auto">
+            </span>
+            <div id="added_clients" className="border border-[#d1cafe] bg-[#f9f8ff] rounded-md p-4 space-y-2 max-h-60 overflow-y-auto">
               <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-[#e0dfff]">
                 <span className="text-[#1e1e2f] font-medium">João da Silva</span>
                 <button

@@ -33,7 +33,7 @@ describe("Página de Cadastro de Consórcio", () => {
     expect(screen.getByLabelText(/Quantidade de Parcelas/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Data de Início/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Buscar Cliente/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Clientes Adicionados/i)).toBeInTheDocument();
+    expect(screen.getByText(/Clientes Adicionados/i)).toBeInTheDocument();
 
     // Botões
     expect(screen.getByRole("button", { name: /Adicionar/i })).toBeInTheDocument();
