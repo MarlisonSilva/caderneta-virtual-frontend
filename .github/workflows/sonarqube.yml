@@ -32,7 +32,7 @@ jobs:
 
       - name: Run tests with Jest and coverage
         run: |
-          npm run test -- --coverage --ci --reporters=default --reporters=jest-sonar
+          npm run test -- --coverage --ci --reporters=default --reporters=jest-sonar-reporter
         env:
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
 
