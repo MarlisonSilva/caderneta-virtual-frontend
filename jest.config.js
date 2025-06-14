@@ -9,5 +9,10 @@ module.exports = {
     "^@/(.*)$": "<rootDir>/src/$1"
   },
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
-  transformIgnorePatterns: ["<rootDir>/node_modules/"]
+  transformIgnorePatterns: ["<rootDir>/node_modules/"],
+  globals: {
+    "ts-jest": {
+      tsconfig: "tsconfig.test.json"
+    }
+  }
 };
