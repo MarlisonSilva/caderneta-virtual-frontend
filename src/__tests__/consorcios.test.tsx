@@ -15,13 +15,13 @@ jest.mock("@/components/Header", () => {
   return MockHeader;
 });
 
-jest.mock("@/components/consorcios/HeaderConsorcios", () => {
+jest.mock("@/components/consortia/HeaderConsortia", () => {
   const MockHeaderConsorcios = () => <div data-testid="header-consorcios" />;
   MockHeaderConsorcios.displayName = "MockHeaderConsorcios";
   return MockHeaderConsorcios;
 });
 
-jest.mock("@/components/consorcios/ConsorciosTable", () => {
+jest.mock("@/components/consortia/ConsortiaTable", () => {
   const MockConsorciosTable = () => <div data-testid="consorcio-table" />;
   MockConsorciosTable.displayName = "MockConsorciosTable";
   return MockConsorciosTable;
@@ -35,9 +35,6 @@ describe("Página de Consórcios", () => {
     expect(screen.getByTestId("header")).toBeInTheDocument();
     expect(screen.getByTestId("header-consorcios")).toBeInTheDocument();
     expect(screen.getByTestId("consorcio-table")).toBeInTheDocument();
-
-    // Combobox de status
-    expect(screen.getByRole("combobox", { name: "" })).toBeInTheDocument();
 
     // Tem 2 selects, então testamos ambos
     const selects = screen.getAllByRole("combobox");
