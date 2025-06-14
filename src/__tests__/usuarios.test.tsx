@@ -15,13 +15,13 @@ jest.mock("@/components/Header", () => {
   return MockHeader;
 });
 
-jest.mock("@/components/usuarios/HeaderUsuarios", () => {
+jest.mock("@/components/users/HeaderUsers", () => {
   const MockHeaderUsuarios = () => <div data-testid="header-usuarios" />;
   MockHeaderUsuarios.displayName = "MockHeaderUsuarios";
   return MockHeaderUsuarios;
 });
 
-jest.mock("@/components/usuarios/UsuariosTable", () => {
+jest.mock("@/components/users/UsersTable", () => {
   const MockUsuariosTable = () => <div data-testid="user-table" />;
   MockUsuariosTable.displayName = "MockUsuariosTable";
   return MockUsuariosTable;
