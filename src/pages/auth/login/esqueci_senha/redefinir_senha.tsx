@@ -49,7 +49,7 @@ export default function TelaRedefinicaoSenha() {
           <div className="flex justify-center gap-2">
             {code.map((value, index) => (
               <input
-                key={index}
+                key={`digit-${index}`} 
                 value={value}
                 ref={(el) => {
                   inputsRef.current[index] = el;

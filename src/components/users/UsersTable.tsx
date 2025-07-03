@@ -16,7 +16,7 @@ export default function UsersTable() {
                 </thead>
                 <tbody className="divide-y divide-[#f1efff]">
                     {users.map((u, i) => (
-                        <tr key={i} className="hover:bg-[#f7f6fc] transition-colors duration-150">
+                        <tr key={u.id} className="hover:bg-[#f7f6fc] transition-colors duration-150">
                             <td className="px-6 py-4 font-medium text-[#5e5e7f]">{u.nome}</td>
                             <td className="px-6 py-4">{u.email}</td>
                             <td className="px-6 py-4">{u.telefone}</td>
