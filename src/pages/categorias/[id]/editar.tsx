@@ -70,8 +70,9 @@ export default function EditCategory() {
           className="max-w-2xl bg-white border border-[#ede9ff] rounded-xl shadow-md p-8 grid gap-6"
         >
           <div>
-            <label className="block mb-1 font-semibold text-[#1e1e2f]">Nome:</label>
+            <label htmlFor="name" className="block mb-1 font-semibold text-[#1e1e2f]">Nome:</label>
             <input
+              id="name"
               name="name"
               type="text"
               value={form.name}

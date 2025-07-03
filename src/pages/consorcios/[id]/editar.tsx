@@ -57,10 +57,11 @@ export default function EditConsortium() {
         >
           <div className="grid grid-cols-2 gap-6">
             <div>
-              <label className="block mb-1 font-semibold text-[#1e1e2f]">
+              <label htmlFor="name" className="block mb-1 font-semibold text-[#1e1e2f]">
                 Nome do consórcio:
               </label>
               <input
+                id="name"
                 name="nome"
                 type="text"
                 value={form.nome}
@@ -70,10 +71,11 @@ export default function EditConsortium() {
             </div>
 
             <div>
-              <label className="block mb-1 font-semibold text-[#1e1e2f]">
+              <label htmlFor="product" className="block mb-1 font-semibold text-[#1e1e2f]">
                 Produto:
               </label>
               <select
+                id="product"
                 name="produto"
                 value={form.produto}
                 onChange={handleChange}
@@ -89,10 +91,11 @@ export default function EditConsortium() {
             </div>
 
             <div>
-              <label className="block mb-1 font-semibold text-[#1e1e2f]">
+              <label htmlFor="total_value" className="block mb-1 font-semibold text-[#1e1e2f]">
                 Valor Total:
               </label>
               <input
+                id="total_value"
                 name="valorTotal"
                 type="number"
                 value={form.valorTotal}
@@ -103,10 +106,11 @@ export default function EditConsortium() {
             </div>
 
             <div>
-              <label className="block mb-1 font-semibold text-[#1e1e2f]">
+              <label htmlFor="installment" className="block mb-1 font-semibold text-[#1e1e2f]">
                 Parcelas:
               </label>
               <input
+                id="installment"
                 name="parcelas"
                 type="number"
                 value={form.parcelas}
@@ -117,10 +121,11 @@ export default function EditConsortium() {
             </div>
 
             <div>
-              <label className="block mb-1 font-semibold text-[#1e1e2f]">
+              <label htmlFor="start_date" className="block mb-1 font-semibold text-[#1e1e2f]">
                 Data de Início:
               </label>
               <input
+                id="start_date"
                 name="dataInicio"
                 type="date"
                 value={form.dataInicio}
