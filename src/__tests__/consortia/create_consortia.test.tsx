@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import CadastroConsorcio from "@/pages/consorcios/novo";
+import CreateConsortium from "@/pages/consorcios/novo";
 import "@testing-library/jest-dom";
 
 // Mocks dos componentes importados com displayName
@@ -17,14 +17,14 @@ jest.mock("@/components/Header", () => {
 
 describe("Página de Cadastro de Consórcio", () => {
   it("renderiza a sidebar e o header", () => {
-    render(<CadastroConsorcio />);
+    render(<CreateConsortium />);
 
     expect(screen.getByTestId("sidebar")).toBeInTheDocument();
     expect(screen.getByTestId("header")).toBeInTheDocument();
   });
 
   it("renderiza os campos principais do formulário", () => {
-    render(<CadastroConsorcio />);
+    render(<CreateConsortium />);
 
     // Labels principais
     expect(screen.getByLabelText(/Nome do consórcio/i)).toBeInTheDocument();
