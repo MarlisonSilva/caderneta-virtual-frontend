@@ -12,23 +12,23 @@ export default function CreateUser() {
 
                 <form className="grid gap-6 max-w-2xl w-full bg-white border border-[#ede9ff] rounded-xl shadow-md p-8 mt-6">
                     <div>
-                        <label className="block mb-1 font-semibold text-[#1e1e2f]">Nome:</label>
-                        <input type="text" placeholder="Nome" className="w-full border border-[#d1cafe] bg-white text-[#1e1e2f] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]" />
+                        <label htmlFor="name" className="block mb-1 font-semibold text-[#1e1e2f]">Nome:</label>
+                        <input id="name" type="text" placeholder="Nome" className="w-full border border-[#d1cafe] bg-white text-[#1e1e2f] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]" />
                     </div>
 
                     <div>
-                        <label className="block mb-1 font-semibold text-[#1e1e2f]">Email:</label>
-                        <input type="email" placeholder="Email" className="w-full border border-[#d1cafe] bg-white text-[#1e1e2f] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]" />
+                        <label htmlFor="email" className="block mb-1 font-semibold text-[#1e1e2f]">Email:</label>
+                        <input id="email" type="email" placeholder="Email" className="w-full border border-[#d1cafe] bg-white text-[#1e1e2f] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]" />
                     </div>
 
                     <div>
-                        <label className="block mb-1 font-semibold text-[#1e1e2f]">Telefone:</label>
-                        <input type="text" placeholder="(00)00000-0000" className="w-full border border-[#d1cafe] bg-white text-[#1e1e2f] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]" />
+                        <label htmlFor="phone" className="block mb-1 font-semibold text-[#1e1e2f]">Telefone:</label>
+                        <input id="phone" type="text" placeholder="(00)00000-0000" className="w-full border border-[#d1cafe] bg-white text-[#1e1e2f] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]" />
                     </div>
 
                     <div>
-                        <label className="block mb-1 font-semibold text-[#1e1e2f]">Senha:</label>
-                        <input type="password" placeholder="Senha" className="w-full border border-[#d1cafe] bg-white text-[#1e1e2f] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]" />
+                        <label htmlFor="password" className="block mb-1 font-semibold text-[#1e1e2f]">Senha:</label>
+                        <input id="password" type="password" placeholder="Senha" className="w-full border border-[#d1cafe] bg-white text-[#1e1e2f] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]" />
                     </div>
 
                     <div className="grid grid-cols-4 gap-4">

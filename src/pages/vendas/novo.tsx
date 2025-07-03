@@ -18,10 +18,11 @@ export default function CreateSale() {
 
         <form className="grid gap-6 max-w-2xl w-full bg-white border border-[#ede9ff] rounded-xl shadow-md p-8 mt-6">
           <div>
-            <label className="block mb-1 font-semibold text-[#1e1e2f]">
+            <label htmlFor="customer" className="block mb-1 font-semibold text-[#1e1e2f]">
               Comprador:
             </label>
             <input
+              id="customer"
               type="text"
               placeholder="Nome do cliente comprador"
               className="w-full border border-[#d1cafe] bg-white text-[#1e1e2f] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
@@ -29,10 +30,11 @@ export default function CreateSale() {
           </div>
 
           <div>
-            <label className="block mb-1 font-semibold text-[#1e1e2f]">
+            <label htmlFor="date" className="block mb-1 font-semibold text-[#1e1e2f]">
               Data da venda:
             </label>
             <input
+              id="date"
               name="data"
               type="date"
               placeholder="Data de realização da venda"
@@ -41,10 +43,11 @@ export default function CreateSale() {
           </div>
 
           <div>
-            <label className="block mb-1 font-semibold text-[#1e1e2f]">
+            <label htmlFor="installment" className="block mb-1 font-semibold text-[#1e1e2f]">
               Quantidade de parcelas:
             </label>
             <input
+              id="installment"
               name="quantidade_parcelas"
               type="number"
               placeholder="Quantidade de parcelas" 
@@ -53,11 +56,12 @@ export default function CreateSale() {
           </div>
 
           <div>
-            <label className="block mb-1 font-semibold text-[#1e1e2f]">
+            <label htmlFor="products" className="block mb-1 font-semibold text-[#1e1e2f]">
               Produtos:
             </label>
             <div className="flex">
               <Select
+                id="products"
                 options={products}
                 className="me-2 w-full"
                 placeholder="Buscar produto(s)..."

@@ -98,10 +98,11 @@ export default function EditProduct() {
           className="grid gap-6 max-w-2xl w-full bg-white border border-[#ede9ff] rounded-xl shadow-md p-8 mt-6"
         >
           <div>
-            <label className="block mb-1 font-semibold text-[#1e1e2f]">
+            <label htmlFor="name" className="block mb-1 font-semibold text-[#1e1e2f]">
               Nome do Produto:
             </label>
             <input
+              id="name"
               name="name"
               type="text"
               placeholder="Nome do produto"
@@ -114,10 +115,11 @@ export default function EditProduct() {
           </div>
 
           <div>
-            <label className="block mb-1 font-semibold text-[#1e1e2f]">
+            <label htmlFor="category_id" className="block mb-1 font-semibold text-[#1e1e2f]">
               Categoria:
             </label>
             <select
+              id="category_id"
               name="category_id"
               value={form.category_id}
               onChange={handleChange}
@@ -135,10 +137,11 @@ export default function EditProduct() {
           </div>
 
           <div>
-            <label className="block mb-1 font-semibold text-[#1e1e2f]">
+            <label htmlFor="color_id" className="block mb-1 font-semibold text-[#1e1e2f]">
               Cor:
             </label>
             <select
+              id="color_id"
               name="color_id"
               value={form.color_id}
               onChange={handleChange}
@@ -156,10 +159,11 @@ export default function EditProduct() {
           </div>
 
           <div>
-            <label className="block mb-1 font-semibold text-[#1e1e2f]">
+            <label htmlFor="capacity" className="block mb-1 font-semibold text-[#1e1e2f]">
               Capacidade:
             </label>
             <input
+              id="capacity"
               name="capacity"
               type="text"
               placeholder="Capacidade (apenas número)"
@@ -172,10 +176,11 @@ export default function EditProduct() {
           </div>
 
           <div>
-            <label className="block mb-1 font-semibold text-[#1e1e2f]">
+            <label htmlFor="metric_id" className="block mb-1 font-semibold text-[#1e1e2f]">
               Unidade de Medida:
             </label>
             <select
+              id="metric_id"
               name="metric_id"
               value={form.metric_id}
               onChange={handleChange}
