@@ -1,6 +1,6 @@
 "use client";
 
-import Botao_voltar from "@/components/Button_back";
+import ButtonBack from "@/components/ButtonBack";
 import { validar_Senha } from "@/utils/validacoes";
 import { useRouter } from "next/router";
 import { JSX, useState } from "react";
@@ -61,7 +61,7 @@ export default function Nova_senha() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-md border border-gray-300">
-        <Botao_voltar />
+        <ButtonBack />
         <h1 className="text-2xl font-bold text-center text-[#816bff] mb-2">Nova Senha</h1>
         <p className="text-sm text-center text-gray-500 mb-6">Coloque a sua nova senha</p>
 

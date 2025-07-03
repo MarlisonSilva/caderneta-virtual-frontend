@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 
-export default function Botao_voltar() {
+export default function ButtonBack() {
   const router = useRouter();
 
   return (
