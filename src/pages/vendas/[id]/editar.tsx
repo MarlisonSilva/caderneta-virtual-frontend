@@ -60,10 +60,11 @@ export default function EditSale() {
           className="grid gap-6 max-w-2xl bg-white border border-[#ede9ff] rounded-xl shadow-md p-8"
         >
           <div>
-            <label className="block mb-1 font-semibold text-[#1e1e2f]">
+            <label htmlFor="customer" className="block mb-1 font-semibold text-[#1e1e2f]">
               Cliente:
             </label>
             <input
+              id="customer"
               name="cliente"
               type="text"
               value={formData.cliente}
@@ -73,10 +74,11 @@ export default function EditSale() {
           </div>
 
           <div>
-            <label className="block mb-1 font-semibold text-[#1e1e2f]">
+            <label htmlFor="date" className="block mb-1 font-semibold text-[#1e1e2f]">
               Data:
             </label>
             <input
+              id="date"
               name="data"
               type="date"
               value={formData.data}
@@ -86,10 +88,11 @@ export default function EditSale() {
           </div>
 
           <div>
-            <label className="block mb-1 font-semibold text-[#1e1e2f]">
+            <label htmlFor="installment" className="block mb-1 font-semibold text-[#1e1e2f]">
               Parcelas:
             </label>
             <input
+              id="installment"
               name="quantidade_parcelas"
               type="number"
               value={formData.quantidade_parcelas}
@@ -99,11 +102,12 @@ export default function EditSale() {
           </div>
 
           <div>
-            <label className="block mb-1 font-semibold text-[#1e1e2f]">
+            <label htmlFor="products" className="block mb-1 font-semibold text-[#1e1e2f]">
               Produtos:
             </label>
             <div className="flex">
               <Select
+                id="products"
                 options={products}
                 className="me-2 w-full"
                 placeholder="Buscar produto(s)..."
