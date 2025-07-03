@@ -45,10 +45,11 @@ export default function CreateCategory() {
           className="grid gap-6 max-w-2xl w-full bg-white border border-[#ede9ff] rounded-xl shadow-md p-8 mt-6"
         >
           <div>
-            <label className="block mb-1 font-semibold text-[#1e1e2f]">
+            <label htmlFor="name" className="block mb-1 font-semibold text-[#1e1e2f]">
               Nome da Categoria:
             </label>
             <input
+              id="name"
               name="name"
               type="text"
               placeholder="Nome da categoria"
