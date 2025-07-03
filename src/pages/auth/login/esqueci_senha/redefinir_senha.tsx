@@ -1,5 +1,5 @@
 "use client";
-import Botao_voltar from "@/components/Button_back";
+import ButtonBack from "@/components/ButtonBack";
 import { useRouter } from "next/router";
 import { useState, useRef } from "react";
 
@@ -37,7 +37,7 @@ export default function TelaRedefinicaoSenha() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
       <div className="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full relative">
         <div className="absolute top-4 left-4">
-          <Botao_voltar />
+          <ButtonBack />
         </div>
         <h1 className="text-2xl font-bold text-center mb-2">
           Redefinição de senha
