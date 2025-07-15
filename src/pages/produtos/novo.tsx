@@ -3,10 +3,10 @@ import { useRouter } from "next/router";
 import Sidebar from "../../components/Siderbar";
 import Header from "../../components/Header";
 import { fetchAPI } from "@/utils/connections";
-import { Product } from "@/types/product"; 
-import { Category } from "@/types/category"; 
-import { Color } from "@/types/color"; 
-import { Metric } from "@/types/metric"; 
+import { Product } from "@/types/product";
+import { Category } from "@/types/category";
+import { Color } from "@/types/color";
+import { Metric } from "@/types/metric";
 
 export default function CreateProduct() {
   const router = useRouter();
@@ -16,6 +16,7 @@ export default function CreateProduct() {
     color_id: "",
     capacity: "",
     metric_id: "",
+    price: "",
   });
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -174,6 +175,22 @@ export default function CreateProduct() {
             </select>
           </div>
 
+          <div>
+            <label htmlFor="price" className="block mb-1 font-semibold text-[#1e1e2f]">
+              Preço:
+            </label>
+            <input
+              id="price"
+              name="price"
+              type="text"
+              placeholder="Preço"
+              value={form.price}
+              onChange={handleChange}
+              required
+              disabled={loading}
+              className="w-full border border-[#d1cafe] bg-white text-[#1e1e2f] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
+            />
+          </div>
           <div className="flex justify-end">
             <button
               type="submit"

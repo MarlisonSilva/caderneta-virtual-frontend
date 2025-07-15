@@ -1,14 +1,128 @@
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Sidebar from "../../components/Siderbar";
 import Header from "../../components/Header";
-import Select from "react-select";
+import Select, { SingleValue } from "react-select";
+import { fetchAPI } from "@/utils/connections";
+import { Product } from "@/types/product";
 
-const products = [
-  { value: 'garrafa_rosa_325ml', label: 'Garrafa Rosa 325 ml' },
-  { value: 'caneca_branca', label: 'Caneca Branca' },
-  { value: 'camiseta_preta_p', label: 'Camiseta Preta P' },
-];
+// —— tipos vindos da API ————————————————————————————
+type User = {
+  id: string;
+  name: string;
+};
+
+type SaleForm = {
+  customerId: string; // ID do comprador
+  date: string;
+  installments: number;
+  products: Product[];
+};
 
 export default function CreateSale() {
+  const router = useRouter();
+
+  // —— estado principal ——————————————————————————
+  const [form, setForm] = useState<SaleForm>({
+    customerId: "",
+    date: "",
+    installments: 1,
+    products: [],
+  });
+
+  // dados externos
+  const [products, setProducts] = useState<Product[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
+
+  // selects
+  const [selectedProduct, setSelectedProduct] = useState<SingleValue<Product>>(null);
+  const [selectedUser, setSelectedUser] = useState<SingleValue<User>>(null);
+
+  const [loading, setLoading] = useState(false);
+
+  // —— carrega produtos e usuários ——————————————————
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const [prodData, userData] = await Promise.all([
+          fetchAPI<Product[]>({ path: "/products", method: "GET" }),
+          fetchAPI<User[]>({ path: "/users", method: "GET" }),
+        ]);
+        setProducts(prodData);
+        setUsers(userData);
+      } catch (err) {
+        console.error("Erro ao carregar dados:", err);
+        alert("Erro ao buscar produtos ou usuários.");
+      }
+    }
+
+    loadData();
+  }, []);
+
+  // —— handlers ————————————————————————————————
+  function handleAddProduct() {
+    if (!selectedProduct) return;
+    setForm((prev) => ({
+      ...prev,
+      products: [...prev.products, selectedProduct as Product],
+    }));
+    setSelectedProduct(null);
+  }
+
+  function handleRemoveProduct(index: number) {
+    setForm((prev) => ({
+      ...prev,
+      products: prev.products.filter((_, i) => i !== index),
+    }));
+  }
+
+  const total = form.products.reduce((sum, p) => sum + Number(p.price), 0);
+
+  // —— submit ————————————————————————————————
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+
+    if (!selectedUser) {
+      alert("Selecione um comprador.");
+      return;
+    }
+
+    if (!form.products.length) {
+      alert("Adicione ao menos um produto.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await fetchAPI({
+        path: "/sales/",
+        method: "POST",
+        body: {
+          customer: selectedUser.id,
+          sale_date: form.date,
+          installments_quantity: form.installments,
+        },
+      });
+      await fetchAPI({
+        path: "sales/products/",
+        method: "POST",
+        body: {
+          sale_id: form.customerId,
+          products: form.products.map((p) => p.id),
+        },
+      });
+
+      alert("Venda cadastrada com sucesso!");
+      router.push("/vendas");
+    } catch (err) {
+      console.error("Erro ao cadastrar venda:", err);
+      alert("Erro ao cadastrar venda.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // —— UI ———————————————————————————————————————
   return (
     <div className="flex min-h-screen bg-[#f7f6fc] text-[#1e1e2f]">
       <Sidebar />
@@ -16,80 +130,122 @@ export default function CreateSale() {
       <main className="flex-1 p-10">
         <Header />
 
-        <form className="grid gap-6 max-w-2xl w-full bg-white border border-[#ede9ff] rounded-xl shadow-md p-8 mt-6">
+        <form
+          onSubmit={handleSubmit}
+          className="grid gap-6 max-w-2xl w-full bg-white border border-[#ede9ff] rounded-xl shadow-md p-8 mt-6"
+        >
+          {/* comprador */}
           <div>
-            <label htmlFor="customer" className="block mb-1 font-semibold text-[#1e1e2f]">
-              Comprador:
-            </label>
-            <input
-              id="customer"
-              type="text"
-              placeholder="Nome do cliente comprador"
-              className="w-full border border-[#d1cafe] bg-white text-[#1e1e2f] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
+            <label className="block mb-1 font-semibold">Comprador:</label>
+            <Select<User, false>
+              options={users}
+              value={selectedUser}
+              onChange={(opt) => setSelectedUser(opt)}
+              getOptionLabel={(u) => u.name}
+              getOptionValue={(u) => u.id}
+              placeholder="Buscar comprador..."
+              isDisabled={loading}
+              isSearchable
             />
           </div>
 
+          {/* data */}
           <div>
-            <label htmlFor="date" className="block mb-1 font-semibold text-[#1e1e2f]">
+            <label htmlFor="date" className="block mb-1 font-semibold">
               Data da venda:
             </label>
             <input
               id="date"
-              name="data"
+              name="date"
               type="date"
-              placeholder="Data de realização da venda"
-              className="border border-[#d1cafe] bg-white rounded-md p-3 w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
+              value={form.date}
+              onChange={(e) => setForm({ ...form, date: e.target.value })}
+              className="w-full border border-[#d1cafe] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
+              required
+              disabled={loading}
             />
           </div>
 
+          {/* parcelas */}
           <div>
-            <label htmlFor="installment" className="block mb-1 font-semibold text-[#1e1e2f]">
+            <label htmlFor="installments" className="block mb-1 font-semibold">
               Quantidade de parcelas:
             </label>
             <input
-              id="installment"
-              name="quantidade_parcelas"
+              id="installments"
+              name="installments"
               type="number"
-              placeholder="Quantidade de parcelas" 
-              className="border border-[#d1cafe] bg-white rounded-md p-3 w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
+              min={1}
+              value={form.installments}
+              onChange={(e) => setForm({ ...form, installments: Number(e.target.value) })}
+              className="w-full border border-[#d1cafe] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
+              required
+              disabled={loading}
             />
           </div>
 
+          {/* produtos */}
           <div>
-            <label htmlFor="products" className="block mb-1 font-semibold text-[#1e1e2f]">
-              Produtos:
-            </label>
+            <label className="block mb-1 font-semibold">Produtos:</label>
             <div className="flex">
-              <Select
-                id="products"
+              <Select<Product, false>
                 options={products}
-                className="me-2 w-full"
-                placeholder="Buscar produto(s)..."
+                value={selectedProduct}
+                onChange={(opt) => setSelectedProduct(opt)}
+                getOptionLabel={(p) => p.name}
+                getOptionValue={(p) => p.id.toString()}
+                placeholder="Buscar produto..."
+                className="me-2 flex-1"
+                isDisabled={loading}
+                isSearchable
               />
               <button
-                type="submit"
-                className="bg-[#816bff] hover:bg-[#6a55e0] text-white font-medium px-6 py-3 rounded-md transition duration-200 shadow-sm"
+                type="button"
+                onClick={handleAddProduct}
+                disabled={!selectedProduct || loading}
+                className="bg-[#816bff] hover:bg-[#6a55e0] text-white font-medium px-5 py-3 rounded-md transition disabled:opacity-50"
               >
                 +
               </button>
             </div>
           </div>
-          <div>
-            1x Garrafa EcoTupper azul 325 ml <br/>
-            1x Pote Cristalwave rosa 1,2 L <br/>
-            ...
-          </div>
-          <div>
-            Valor total: <br/>
-            120,00
-          </div>
 
+          {/* lista de itens */}
+          {!!form.products.length && (
+            <div className="border border-[#d1cafe] rounded-md p-4">
+              {form.products.map((p, i) => (
+                <div
+                  key={`${p.id}-${i}`}
+                  className="flex justify-between items-center mb-2 last:mb-0"
+                >
+                  <span>
+                    1× {p.name} — R$ {Number(p.price).toFixed(2)}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveProduct(i)}
+                    className="text-sm text-red-600 hover:underline"
+                  >
+                    remover
+                  </button>
+                </div>
+              ))}
+
+              <hr className="my-2" />
+              <div className="font-semibold text-right">
+                Total: R$ {total.toFixed(2)}
+              </div>
+            </div>
+          )}
+
+          {/* submit */}
           <div className="flex justify-end">
             <button
               type="submit"
-              className="bg-[#816bff] hover:bg-[#6a55e0] text-white font-medium px-6 py-3 rounded-md transition duration-200 shadow-sm"
+              disabled={loading}
+              className="bg-[#816bff] hover:bg-[#6a55e0] text-white font-medium px-6 py-3 rounded-md transition disabled:opacity-50"
             >
-              Cadastrar
+              {loading ? "Salvando..." : "Cadastrar"}
             </button>
           </div>
         </form>

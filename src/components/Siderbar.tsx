@@ -6,7 +6,6 @@ export default function Sidebar() {
   const menuItems = [
     { label: "Produtos", path: "/produtos" },
     { label: "Vendas", path: "/vendas" },
-    { label: "Consórcios", path: "/consorcios" },
     { label: "Categorias", path: "/categorias" },
     { label: "Cores", path: "/cores" },
     { label: "Unidades", path: "/unidades" },

@@ -30,6 +30,7 @@ export default function ProductsTable() {
             <th className="px-6 py-4">Categoria</th>
             <th className="px-6 py-4">Cor</th>
             <th className="px-6 py-4">Capacidade</th>
+            <th className="px-6 py-4">Preço</th>
             <th className="px-6 py-4 text-right">Ação</th>
           </tr>
         </thead>
@@ -43,6 +44,7 @@ export default function ProductsTable() {
               <td className="px-6 py-4">{p.category.name}</td>
               <td className="px-6 py-4">{p.color.name}</td>
               <td className="px-6 py-4">{p.capacity} {p.metric.name}</td>
+              <td className="px-6 py-4">{p.price}</td>
               <td className="px-6 py-4 text-right">
                 <Link
                   href={`/produtos/${p.id}`}

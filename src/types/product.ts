@@ -9,4 +9,5 @@ export type Product = {
   color: Color;
   capacity: number;
   metric: Metric;
+  price: number;
 };
