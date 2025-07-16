@@ -23,14 +23,6 @@ export default function ListSales() {
     async function loadSales() {
       try {
         const data = await fetchAPI<Sale[]>({ path: "/sales", method: "GET" });
-        for (const sale of data) {
-          var products = [];
-          for (const product of sale.sold_products) {
-            console.log(product.id);
-            products.push(await fetchAPI<SoldProduct>({ path: `/sold-products/${product.id}`, method: "GET" }));
-          }
-          sale.sold_products = products;
-        }
 
         console.log("Vendas carregadas:", data);
         

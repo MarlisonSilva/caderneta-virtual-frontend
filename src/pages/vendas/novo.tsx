@@ -98,17 +98,10 @@ export default function CreateSale() {
         path: "/sales/",
         method: "POST",
         body: {
-          customer: selectedUser.id,
+          customer_id: selectedUser.id,
           sale_date: form.date,
           installments_quantity: form.installments,
-        },
-      });
-      await fetchAPI({
-        path: "sales/products/",
-        method: "POST",
-        body: {
-          sale_id: form.customerId,
-          products: form.products.map((p) => p.id),
+          sold_products_ids: form.products.map((p) => p.id),
         },
       });
 
