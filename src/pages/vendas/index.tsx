@@ -6,6 +6,7 @@ import HeaderSales from "@/components/sales/HeaderSales";
 import { fetchAPI } from "@/utils/connections";
 import { User } from "@/types/user";
 import { SoldProduct } from "@/types/sold_product";
+import Link from "next/link";
 
 interface Sale {
   id: string;
@@ -92,6 +93,14 @@ export default function ListSales() {
                       {
                         s.sold_products.map((sp) => sp.product.name).join(", ")
                       }
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <Link
+                        href={`/vendas/${s.id}`}
+                        className="text-[#816bff] hover:underline hover:text-[#6a55e0] font-medium transition"
+                      >
+                        Ver detalhes
+                      </Link>
                     </td>
 
                   </tr>

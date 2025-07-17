@@ -1,50 +1,130 @@
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Sidebar from "../../../components/Siderbar";
 import Header from "../../../components/Header";
-import sales from "../../../data/sales";
-import Select from "react-select";
+import Select, { SingleValue } from "react-select";
+import { fetchAPI } from "@/utils/connections";
+import { Product } from "@/types/product";
+import { SoldProduct } from "@/types/sold_product";
+import { User } from "@/types/user";
 
-const products = [
-  { value: 'garrafa_rosa_325ml', label: 'Garrafa Rosa 325 ml' },
-  { value: 'caneca_branca', label: 'Caneca Branca' },
-  { value: 'camiseta_preta_p', label: 'Camiseta Preta P' },
-];
+// —— tipos do formulário ————————————————————————————
+type SaleForm = {
+  customerId: string;
+  date: string;
+  installments: number;
+  products: SoldProduct[];
+};
 
 export default function EditSale() {
   const router = useRouter();
   const { id } = router.query;
 
-  const [formData, setFormData] = useState({
-    cliente: "",
-    data: "",
-    quantidade_parcelas: "",
-    produtos: "",
+  const [form, setForm] = useState<SaleForm>({
+    customerId: "",
+    date: "",
+    installments: 1,
+    products: [],
   });
 
+  const [products, setProducts] = useState<Product[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<SingleValue<Product>>(null);
+  const [selectedUser, setSelectedUser] = useState<SingleValue<User>>(null);
+  const [loading, setLoading] = useState(false);
+
+  // —— carregar tudo ——————————————————————————————————
   useEffect(() => {
-    if (id) {
-      const sale = sales.find((v) => v.id === id);
-      if (sale) {
-        setFormData({
-          cliente: sale.cliente,
-          data: sale.data,
-          quantidade_parcelas: sale.quantidade_parcelas,
-          produtos: sale.produtos,
+    if (!id) return;
+
+    async function loadAll() {
+      try {
+        const [prodData, userData, saleData] = await Promise.all([
+          fetchAPI<Product[]>({ path: "/products", method: "GET" }),
+          fetchAPI<User[]>({ path: "/users", method: "GET" }),
+          fetchAPI<any>({ path: `/sales/${id}`, method: "GET" }),
+        ]);
+
+        setProducts(prodData);
+        setUsers(userData);
+
+        setForm({
+          customerId: saleData.customer.id,
+          date: saleData.sale_date,
+          installments: saleData.installments_quantity,
+          products: saleData.sold_products,
         });
+
+        setSelectedUser(userData.find((u) => u.id === saleData.customer.id) ?? null);
+      } catch (err) {
+        console.error("Erro ao carregar dados:", err);
+        alert("Erro ao buscar dados da venda.");
       }
     }
+
+    loadAll();
   }, [id]);
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  function handleAddProduct() {
+    if (!selectedProduct) return;
+
+    const soldProduct: SoldProduct = {
+      id: "", 
+      sale: "", 
+      product: selectedProduct,
+      product_id: selectedProduct.id,
+    };
+
+    setForm((prev) => ({
+      ...prev,
+      products: [...prev.products, soldProduct],
+    }));
+    setSelectedProduct(null);
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleRemoveProduct(index: number) {
+    setForm((prev) => ({
+      ...prev,
+      products: prev.products.filter((_, i) => i !== index),
+    }));
+  }
+
+  const total = form.products.reduce((sum, sp) => sum + Number(sp.product.price), 0);
+
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log("Venda atualizada:", formData);
-    alert("Venda atualizada com sucesso!");
-    router.push(`/vendas/${id}`);
+
+    if (!selectedUser) {
+      alert("Selecione um comprador.");
+      return;
+    }
+
+    if (!form.products.length) {
+      alert("Adicione ao menos um produto.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await fetchAPI({
+        path: `/sales/${id}/`,
+        method: "PUT",
+        body: {
+          customer_id: selectedUser.id,
+          sale_date: form.date,
+          installments_quantity: form.installments,
+          sold_products_ids: form.products.map((sp) => sp.product.id),
+        },
+      });
+
+      alert("Venda atualizada com sucesso!");
+      router.push("/vendas");
+    } catch (err) {
+      console.error("Erro ao editar venda:", err);
+      alert("Erro ao editar venda.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -53,89 +133,123 @@ export default function EditSale() {
 
       <main className="flex-1 p-10 ml-64">
         <Header />
-        <h1 className="text-2xl font-bold mb-6">Editar Venda</h1>
 
         <form
           onSubmit={handleSubmit}
-          className="grid gap-6 max-w-2xl bg-white border border-[#ede9ff] rounded-xl shadow-md p-8"
+          className="grid gap-6 max-w-2xl w-full bg-white border border-[#ede9ff] rounded-xl shadow-md p-8 mt-6"
         >
+          {/* comprador */}
           <div>
-            <label htmlFor="customer" className="block mb-1 font-semibold text-[#1e1e2f]">
-              Cliente:
-            </label>
-            <input
-              id="customer"
-              name="cliente"
-              type="text"
-              value={formData.cliente}
-              onChange={handleChange}
-              className="border border-[#d1cafe] bg-white rounded-md p-3 w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
+            <label className="block mb-1 font-semibold">Comprador:</label>
+            <Select<User, false>
+              options={users}
+              value={selectedUser}
+              onChange={(opt) => setSelectedUser(opt)}
+              getOptionLabel={(u) => u.name}
+              getOptionValue={(u) => u.id}
+              placeholder="Buscar comprador..."
+              isDisabled={loading}
+              isSearchable
             />
           </div>
 
+          {/* data */}
           <div>
-            <label htmlFor="date" className="block mb-1 font-semibold text-[#1e1e2f]">
-              Data:
+            <label htmlFor="date" className="block mb-1 font-semibold">
+              Data da venda:
             </label>
             <input
               id="date"
-              name="data"
+              name="date"
               type="date"
-              value={formData.data}
-              onChange={handleChange}
-              className="border border-[#d1cafe] bg-white rounded-md p-3 w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
+              value={form.date.split("T")[0]}
+              onChange={(e) => setForm({ ...form, date: e.target.value })}
+              className="w-full border border-[#d1cafe] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
+              required
+              disabled={loading}
             />
           </div>
 
+          {/* parcelas */}
           <div>
-            <label htmlFor="installment" className="block mb-1 font-semibold text-[#1e1e2f]">
-              Parcelas:
+            <label htmlFor="installments" className="block mb-1 font-semibold">
+              Quantidade de parcelas:
             </label>
             <input
-              id="installment"
-              name="quantidade_parcelas"
+              id="installments"
+              name="installments"
               type="number"
-              value={formData.quantidade_parcelas}
-              onChange={handleChange}
-              className="border border-[#d1cafe] bg-white rounded-md p-3 w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
+              min={1}
+              value={form.installments}
+              onChange={(e) => setForm({ ...form, installments: Number(e.target.value) })}
+              className="w-full border border-[#d1cafe] rounded-md p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#816bff]"
+              required
+              disabled={loading}
             />
           </div>
 
+          {/* produtos */}
           <div>
-            <label htmlFor="products" className="block mb-1 font-semibold text-[#1e1e2f]">
-              Produtos:
-            </label>
+            <label className="block mb-1 font-semibold">Produtos:</label>
             <div className="flex">
-              <Select
-                id="products"
+              <Select<Product, false>
                 options={products}
-                className="me-2 w-full"
-                placeholder="Buscar produto(s)..."
+                value={selectedProduct}
+                onChange={(opt) => setSelectedProduct(opt)}
+                getOptionLabel={(p) => p.name}
+                getOptionValue={(p) => p.id.toString()}
+                placeholder="Buscar produto..."
+                className="me-2 flex-1"
+                isDisabled={loading}
+                isSearchable
               />
               <button
-                type="submit"
-                className="bg-[#816bff] hover:bg-[#6a55e0] text-white font-medium px-6 py-3 rounded-md transition duration-200 shadow-sm"
+                type="button"
+                onClick={handleAddProduct}
+                disabled={!selectedProduct || loading}
+                className="bg-[#816bff] hover:bg-[#6a55e0] text-white font-medium px-5 py-3 rounded-md transition disabled:opacity-50"
               >
                 +
               </button>
             </div>
           </div>
-          <div>
-            1x Garrafa EcoTupper azul 325 ml <br/>
-            1x Pote Cristalwave rosa 1,2 L <br/>
-            ...
-          </div>
-          <div>
-            Valor total: <br/>
-            120,00
-          </div>
 
+          {/* lista de itens */}
+          {!!form.products.length && (
+            <div className="border border-[#d1cafe] rounded-md p-4">
+              {form.products.map((sp, i) => (
+                <div
+                  key={`${sp.product.id}-${i}`}
+                  className="flex justify-between items-center mb-2 last:mb-0"
+                >
+                  <span>
+                    1× {sp.product.name} — R$ {Number(sp.product.price).toFixed(2)}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveProduct(i)}
+                    className="text-sm text-red-600 hover:underline"
+                  >
+                    remover
+                  </button>
+                </div>
+              ))}
+
+              <hr className="my-2" />
+              <div className="font-semibold text-right">
+                Total: R$ {total.toFixed(2)}
+              </div>
+            </div>
+          )}
+
+          {/* submit */}
           <div className="flex justify-end">
             <button
               type="submit"
-              className="bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-3 rounded-md shadow-sm transition"
+              disabled={loading}
+              className="bg-[#816bff] hover:bg-[#6a55e0] text-white font-medium px-6 py-3 rounded-md transition disabled:opacity-50"
             >
-              Salvar
+              {loading ? "Salvando..." : "Atualizar"}
             </button>
           </div>
         </form>

@@ -11,7 +11,6 @@ export default function Sidebar() {
     { label: "Categorias", path: "/categorias" },
     { label: "Cores", path: "/cores" },
     { label: "Unidades", path: "/unidades" },
-    { label: "Usuários", path: "/usuarios" },
   ];
 
   const logout = () => {

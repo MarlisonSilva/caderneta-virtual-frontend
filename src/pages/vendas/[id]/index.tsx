@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import Sidebar from "@/components/Siderbar";
 import Header from "@/components/Header";
 import sales from "@/data/sales";
-
-type Sale = typeof sales[number];
+import { fetchAPI } from "@/utils/connections";
+import { Sale } from "@/types/sale";
 
 export default function ViewSale() {
   const [confirmVisible, setConfirmVisible] = useState(false);
@@ -12,12 +12,20 @@ export default function ViewSale() {
   const { id } = router.query;
 
   const [sale, setSale] = useState<Sale | null>(null);
-
   useEffect(() => {
-    if (id) {
-      const foundSale = sales.find((v) => v.id === id);
-      setSale(foundSale ?? null);
-    }
+    if (!id || Array.isArray(id)) return;
+
+    fetchAPI<Sale>({
+      path: `/sales/${id}`,
+      method: "GET",
+    })
+      .then((data) => {
+        setSale(data);
+        console.log(data);
+      })
+      .catch((err) => {
+        console.error("Erro ao buscar produto:", err);
+      });
   }, [id]);
 
   if (!sale)
@@ -73,16 +81,19 @@ export default function ViewSale() {
 
         <div className="bg-white rounded-xl border border-[#ede9ff] p-6 shadow-md space-y-3 max-w-2xl">
           <p>
-            <span className="font-semibold text-[#5e5e7f]">Cliente:</span> {sale.cliente}
+            <span className="font-semibold text-[#5e5e7f]">Cliente:</span> {sale.customer.name}
           </p>
           <p>
-            <span className="font-semibold text-[#5e5e7f]">Data:</span> {sale.data}
+            <span className="font-semibold text-[#5e5e7f]">Data:</span>{new Date(sale.sale_date).toLocaleString("pt-BR", {
+              dateStyle: "short",
+              timeStyle: "short",
+            })}
           </p>
           <p>
-            <span className="font-semibold text-[#5e5e7f]">Parcelas:</span> {sale.quantidade_parcelas}
+            <span className="font-semibold text-[#5e5e7f]">Parcelas:</span> {sale.installments_quantity}
           </p>
           <p>
-            <span className="font-semibold text-[#5e5e7f]">Produto:</span> {sale.produtos}
+            <span className="font-semibold text-[#5e5e7f]">Produto:</span> {sale.sold_products.map(sp => sp.product.name).join(", ")}
           </p>
         </div>
 

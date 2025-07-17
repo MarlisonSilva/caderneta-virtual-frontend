@@ -12,11 +12,10 @@ export default function Header() {
         </span>
       </div>
       <div className="flex items-center gap-6">
-        <Link href="/profile">
-          <button className="flex items-center justify-center bg-[#816bff] hover:bg-[#6a55e0] text-white p-2 rounded-full transition-all">
-            <UserIcon className="h-6 w-6" />
-          </button>
-        </Link>
+        <button className="flex items-center justify-center bg-[#816bff] hover:bg-[#6a55e0] text-white p-2 rounded-full transition-all">
+          <UserIcon className="h-6 w-6" />
+        </button>
+
       </div>
     </div>
   );
