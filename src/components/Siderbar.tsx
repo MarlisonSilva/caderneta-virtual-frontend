@@ -1,7 +1,9 @@
+import { useToken } from "@/hooks/useToken";
 import { useRouter } from "next/router";
 
 export default function Sidebar() {
   const router = useRouter();
+  const { setToken } = useToken();
 
   const menuItems = [
     { label: "Produtos", path: "/produtos" },
@@ -11,6 +13,12 @@ export default function Sidebar() {
     { label: "Unidades", path: "/unidades" },
     { label: "Usuários", path: "/usuarios" },
   ];
+
+  const logout = () => {
+    router.push("/auth/login");
+    localStorage.removeItem("authToken");
+    setToken(null);
+  };
 
   return (
     <aside className="w-64 h-screen bg-[#6a55e0] text-white p-6 flex flex-col justify-between shadow-lg">
@@ -35,7 +43,7 @@ export default function Sidebar() {
         </ul>
       </div>
       <button
-        onClick={() => router.push("/auth/login")}
+        onClick={logout}
         className="mt-10 text-sm text-red-200 hover:text-red-100 transition"
       >
         SAIR

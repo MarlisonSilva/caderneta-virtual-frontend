@@ -3,6 +3,9 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { JSX, useState } from "react";
 import { validar_Senha, validar_Email } from "@/utils/validacoes";
+import { fetchAPI } from "@/utils/connections";
+import { useToken } from "@/hooks/useToken";
+import { Token } from "@/contexts/TokenContext";
 
 export default function Login() {
   const router = useRouter();
@@ -20,9 +23,18 @@ export default function Login() {
     setFormData((prevData) => ({ ...prevData, [id]: value }));
   };
 
+  const { setToken } = useToken();
   // Função de submit do formulário
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setToken(
+      await fetchAPI<Token>({
+        path: "/login/",
+        method: "POST",
+        body: formData,
+      }),
+    );
+    router.push("/");
   };
 
   return (
@@ -64,9 +76,8 @@ export default function Login() {
                 placeholder="@"
                 value={formData.email}
                 onChange={handleChange}
-                className={`w-full p-2 border ${
-                  emailError ? "border-red-500" : "border-gray-300"
-                } rounded focus:outline-none focus:ring-2 focus:ring-[#816bff]`}
+                className={`w-full p-2 border ${emailError ? "border-red-500" : "border-gray-300"
+                  } rounded focus:outline-none focus:ring-2 focus:ring-[#816bff]`}
               />
               {emailError && (
                 <p className="text-red-500 text-sm mt-1">{emailError}</p>
@@ -91,7 +102,7 @@ export default function Login() {
                         <li>Número [1,2,3]</li>
                         <li>Caracteres Especiais [!@#$%^&*]</li>
                         <li>Letra</li>
-                      </ul>
+                      </ul>,
                     );
                   } else {
                     setPasswordError("");
@@ -100,9 +111,8 @@ export default function Login() {
                 placeholder="Senha"
                 value={formData.password}
                 onChange={handleChange}
-                className={`w-full p-2 border ${
-                  passwordError ? "border-red-500" : "border-gray-300"
-                } rounded focus:outline-none focus:ring-2 focus:ring-[#816bff]`}
+                className={`w-full p-2 border ${passwordError ? "border-red-500" : "border-gray-300"
+                  } rounded focus:outline-none focus:ring-2 focus:ring-[#816bff]`}
               />
               {passwordError && (
                 <div className="text-red-500 text-sm mt-1">{passwordError}</div>
